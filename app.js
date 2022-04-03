@@ -1,5 +1,5 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+import * as core from '@actions/core';
+import { github } from '@actions/github';
 
 async function run() {
   try {
@@ -12,3 +12,5 @@ async function run() {
     core.setFailed(error.message);
   }
 }
+
+run();
