@@ -1,1 +1,13 @@
+name: issue_test
+on:
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled]
+  issue_comment:
+    types: [created, edited, deleted]
 
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: This is issues test
+        uses: secondnoraworld/github-actions-issues-sample@main
