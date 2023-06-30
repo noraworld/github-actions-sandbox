@@ -19,7 +19,7 @@ async function run() {
     issue_number: issueNumber,
   });
 
-  const content = ''
+  let content = ''
   comments.forEach((comment) => {
     console.log(`comment: ${JSON.stringify(comment)}`);
     content += `${comment.body}\n\n---\n\n`
