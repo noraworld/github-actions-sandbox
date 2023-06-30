@@ -1,6 +1,7 @@
 const { Octokit } = require('@octokit/rest');
 const fs = require('fs');
 const { execSync } = require('child_process');
+const path = require('path')
 
 async function run() {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
@@ -27,6 +28,10 @@ async function run() {
 
   // console.log(`filepath: ${process.env.FILEPATH}`)
   const filename = process.env.FILEPATH
+  const dir = path.dirname(filename)
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
 
   fs.writeFileSync(filename, content);
 
