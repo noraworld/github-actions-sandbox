@@ -30,7 +30,7 @@ async function run() {
   const filename = process.env.FILEPATH
   const dir = path.dirname(filename)
   if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir)
+    fs.mkdirSync(dir, { recursive: true })
   }
 
   fs.writeFileSync(filename, content);
