@@ -33,6 +33,7 @@ async function run() {
   let content = ''
   comments.forEach((comment) => {
     content += `${comment.body}\n\n---\n\n`
+    console.log(`comment.created_at: ${comment.created_at}`)
   })
 
   const filename = process.env.FILEPATH
