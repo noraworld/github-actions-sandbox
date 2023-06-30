@@ -39,7 +39,7 @@ async function run() {
   let content = ''
   let isFirstComment = true
   comments.forEach((comment) => {
-    if (!isFirstComment || existingContent || issueBody) {
+    if (!isFirstComment || issueBody) {
       content += '\n---\n\n'
     }
     isFirstComment = false
