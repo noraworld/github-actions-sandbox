@@ -13,6 +13,7 @@ runs:
       run: npm install
     - name: This is issues test
       run: node $GITHUB_ACTION_PATH/app.js
+      shell: sh
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ISSUE_NUMBER: ${{ github.event.number }}
