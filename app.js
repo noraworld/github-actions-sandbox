@@ -3,7 +3,8 @@ const { Octokit } = require('@octokit/rest');
 async function run() {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
-  const repo = process.env.GITHUB_REPOSITORY;
+  const repository = process.env.GITHUB_REPOSITORY;
+  const [ owner, repo ] = repository.split('/')
   const issueNumber = process.env.ISSUE_NUMBER;
   // console.log('can you see me?')
   // console.log(repo)
