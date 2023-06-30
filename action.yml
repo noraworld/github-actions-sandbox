@@ -13,6 +13,10 @@ inputs:
     description: This value will be used for git commit
     required: false
     default: actions@github.com
+  extra_text_when_modified:
+    description: When the file already exists, this string will be added before the content
+    required: false
+    default: "# From issues"
 
 runs:
   using: "composite"
@@ -36,3 +40,4 @@ runs:
         FILEPATH: ${{ inputs.filepath }}
         COMMITTER_NAME: ${{ inputs.committer_name }}
         COMMITTER_EMAIL: ${{ inputs.committer_email }}
+        EXTRA_TEXT_WHEN_MODIFIED: ${{ inputs.extra_text_when_modified }}

@@ -38,7 +38,7 @@ async function run() {
   const filename = process.env.FILEPATH
   const dir = path.dirname(filename)
 
-  const existingContent = fs.existsSync(filename) ? `${fs.readFileSync(filename)}\n# From issues\n` : ''
+  const existingContent = fs.existsSync(filename) ? `${fs.readFileSync(filename)}\n${process.env.EXTRA_TEXT_WHEN_MODIFIED}\n` : ''
 
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
