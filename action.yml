@@ -28,7 +28,7 @@ inputs:
   time_format:
     description: Time format
     required: false
-    default: yyyy-MM-dd HH:mm:ss
+    default: MMM d, yyyy, h:mm a ZZZZ
 
 runs:
   using: "composite"
