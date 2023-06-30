@@ -54,7 +54,7 @@ async function run() {
     fs.mkdirSync(dir, { recursive: true })
   }
 
-  fs.writeFileSync(filename, existingContent + content);
+  fs.writeFileSync(filename, process.env.ISSUE_BODY + existingContent + content);
 
   execSync('git config --global user.email "mail@noraworld.com"')
   execSync('git config --global user.name "Kosuke Aoki"')

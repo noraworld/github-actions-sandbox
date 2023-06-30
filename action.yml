@@ -23,5 +23,6 @@ runs:
       shell: sh
       env:
         ISSUE_NUMBER: ${{ github.event.issue.number }}
+        ISSUE_BODY: ${{ github.event.issue.body }}
         GITHUB_ACTION_PATH: ${{ github.action_path }}
         FILEPATH: ${{ inputs.filepath }}
