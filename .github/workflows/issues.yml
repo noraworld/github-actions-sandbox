@@ -21,3 +21,5 @@ jobs:
           committer_name: Kosuke Aoki
           committer_email: mail@noraworld.com
           extra_text_when_modified: "# issue からこんにちはです"
+          with_date: true
+          timezone: Asia/Tokyo

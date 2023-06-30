@@ -4,6 +4,7 @@ const { Octokit } = require('@octokit/rest')
 const fs = require('fs')
 const { execSync } = require('child_process')
 const path = require('path')
+const { DateTime } = require('luxon')
 
 async function run() {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
@@ -32,8 +33,9 @@ async function run() {
 
   let content = ''
   comments.forEach((comment) => {
-    content += `${comment.body}\n\n---\n\n`
-    console.log(`comment.created_at: ${comment.created_at}`)
+    content += comment.body
+    if (process.env.WITH_DATE) content += `\n\n> ${formattedDateTime(comment.created_at)}`
+    content += '\n\n---\n\n'
   })
 
   const filename = process.env.FILEPATH
@@ -52,6 +54,12 @@ async function run() {
   execSync(`git add "${filename}"`)
   execSync(`git commit -m "${filename}"`)
   execSync('git push')
+}
+
+function formattedDateTime(timestamp) {
+  const universalTime = DateTime.fromISO(timestamp, { zone: 'utc' })
+  const localTime = universalTime.setZone(process.env.TIMEZONE)
+  return localTime.toFormat(process.env.TIME_FORMAT)
 }
 
 run().catch((error) => {
