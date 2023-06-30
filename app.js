@@ -18,7 +18,7 @@ async function run() {
   });
 
   comments.forEach((comment) => {
-    console.log(`comment: ${comment}`)
+    console.dir(`comment: ${comment}`)
     console.log(`Comment ID: ${comment.id}`);
     console.log(`Author: ${comment.user.login}`);
     console.log(`Body: ${comment.body}`);
