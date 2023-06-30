@@ -2,4 +2,18 @@ name: "This is issues test"
 description: "This is issues test"
 runs:
   using: "node16"
-  main: "app.js"
+  steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - name: Install dependencies
+      run: npm install
+    - name: This is issues test
+      run: node $GITHUB_ACTION_PATH/app.js
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ISSUE_NUMBER: ${{ github.event.number }}
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
