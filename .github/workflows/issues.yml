@@ -29,4 +29,4 @@ jobs:
       - name: This is issues test
         uses: secondnoraworld/github-actions-issues-sample@main
         with:
-          filepath: _posts/${{ steps.year.outputs.year }}/${{ steps.month.outputs.month }}/${{ ${{ github.event.issue.title }} }}-.md
+          filepath: _posts/${{ steps.year.outputs.year }}/${{ steps.month.outputs.month }}/${{ github.event.issue.title }}-.md
