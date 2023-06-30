@@ -9,12 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get year
-        run: echo "date=$(cut -d '-' -f1 <<< ${{ github.event.issue.title }})" >> "$YEAR"
+        run: echo "YEAR=$(cut -d '-' -f1 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
 
       - name: get month
-        run: echo "date=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> "$MONTH"
+        run: echo "MONTH=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
 
       - name: This is issues test
         uses: secondnoraworld/github-actions-issues-sample@main
         with:
-          filepath: _posts/$YEAR/$MONTH/${{ github.event.issue.title }}-.md
+          filepath: _posts/${{ env.YEAR }}/${{ env.MONTH }}/${{ github.event.issue.title }}-.md
