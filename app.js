@@ -40,7 +40,7 @@ async function run() {
 
   let content = ''
   comments.forEach((comment) => {
-    console.log(`comment: ${JSON.stringify(comment)}`);
+    // console.log(`comment: ${JSON.stringify(comment)}`);
     content += `${comment.body}\n\n---\n\n`
   });
 
@@ -54,6 +54,7 @@ async function run() {
     fs.mkdirSync(dir, { recursive: true })
   }
 
+  console.log(`process.env.ISSUE_BODY: ${process.env.ISSUE_BODY}`)
   fs.writeFileSync(filename, process.env.ISSUE_BODY + existingContent + content);
 
   execSync('git config --global user.email "mail@noraworld.com"')
