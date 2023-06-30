@@ -10,3 +10,5 @@ jobs:
     steps:
       - name: This is issues test
         uses: secondnoraworld/github-actions-issues-sample@main
+        # with:
+        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
