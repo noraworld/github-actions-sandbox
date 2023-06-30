@@ -31,23 +31,33 @@ async function run() {
     page++
   } while (response.data.length === perPage)
 
-  let content = ''
-  comments.forEach((comment) => {
-    content += comment.body
-    if (process.env.WITH_DATE) content += `\n\n> ${formattedDateTime(comment.created_at)}`
-    content += '\n\n---\n\n'
-  })
-
   const filename = process.env.FILEPATH
   const dir = path.dirname(filename)
-
   const existingContent = fs.existsSync(filename) ? `${fs.readFileSync(filename)}\n${process.env.EXTRA_TEXT_WHEN_MODIFIED}\n` : ''
+  const issueBody = process.env.ISSUE_BODY ? `${process.env.ISSUE_BODY}\n` : ''
+
+  let content = ''
+  let isFirstComment = true
+  comments.forEach((comment) => {
+    if (!isFirstComment || existingContent || issueBody) {
+      content += '\n---\n\n'
+    }
+    isFirstComment = false
+
+    content += comment.body
+
+    if (process.env.WITH_DATE) {
+      content += `\n\n> ${formattedDateTime(comment.created_at)}`
+    }
+
+    content += '\n'
+  })
 
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
   }
 
-  fs.writeFileSync(filename, `${existingContent}${process.env.ISSUE_BODY}\n\n---\n\n${content}`)
+  fs.writeFileSync(filename, `${existingContent}${issueBody}${content}`)
 
   execSync(`git config --global user.name "${process.env.COMMITTER_NAME}"`)
   execSync(`git config --global user.email "${process.env.COMMITTER_EMAIL}"`)
