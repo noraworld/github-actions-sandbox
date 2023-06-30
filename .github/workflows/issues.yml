@@ -20,3 +20,4 @@ jobs:
         uses: secondnoraworld/github-actions-issues-sample@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.number }}
