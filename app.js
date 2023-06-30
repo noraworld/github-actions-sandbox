@@ -5,6 +5,9 @@ async function run() {
 
   const { owner, repo } = process.env.GITHUB_REPOSITORY;
   const githubRef = process.env.GITHUB_REF;
+  console.log('can you see me?')
+  console.log(owner)
+  console.log(repo)
   console.log(githubRef)
   // const issueNumber = process.env.GITHUB_EVENT.issue.number;
 
