@@ -23,4 +23,4 @@ jobs:
           extra_text_when_modified: "# issue からこんにちはです"
           with_date: true
           timezone: Asia/Tokyo
-          time_format: h:mm a · MMM d, yyyy
+          time_format: h:mm a · MMM d, yyyy (ZZZZ)
