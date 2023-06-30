@@ -29,8 +29,13 @@ inputs:
     description: Time format
     required: false
     default: MMM d, yyyy, h:mm a ZZZZ
-    # GitHub comments style: "MMM d, yyyy, h:mm a ZZZZ"
-    # Twitter style:         "h:mm a · MMM d, yyyy"
+    # GitHub comments style:
+    #   format:  "MMM d, yyyy, h:mm a ZZZZ"
+    #   example: "Jun 30, 2023, 6:55 PM GMT+9"
+    #
+    # Twitter style:
+    #   format:  "h:mm a · MMM d, yyyy"
+    #   example: "6:55 PM · Jun 30, 2023"
 
 runs:
   using: "composite"
