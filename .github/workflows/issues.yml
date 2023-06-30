@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get year
-        run: echo "date=$(cut -d '-' -f1 <<< ${{ github.event.issue.title }})" >> $YEAR
+        run: echo "date=$(cut -d '-' -f1 <<< ${{ github.event.issue.title }})" >> "$YEAR"
 
       - name: get month
-        run: echo "date=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> $MONTH
+        run: echo "date=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> "$MONTH"
 
       - name: This is issues test
         uses: secondnoraworld/github-actions-issues-sample@main
