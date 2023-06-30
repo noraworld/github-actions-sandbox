@@ -1,5 +1,11 @@
 name: "This is issues test"
 description: "This is issues test"
+
+inputs:
+  filepath:
+    description: "filepath"
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -18,3 +24,4 @@ runs:
       env:
         ISSUE_NUMBER: ${{ github.event.issue.number }}
         GITHUB_ACTION_PATH: ${{ github.action_path }}
+        FILEPATH: ${{ inputs.filepath }}

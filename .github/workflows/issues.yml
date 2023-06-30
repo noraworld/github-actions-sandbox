@@ -8,7 +8,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date and time
+        env:
+          TZ: "Asia/Tokyo"
+        id: date
+        run: echo "::set-output name=year::$(date +'%Y')"
+        run: echo "::set-output name=month::$(date +'%m')"
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
       - name: This is issues test
         uses: secondnoraworld/github-actions-issues-sample@main
-        # with:
-        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filepath: _posts/${{ steps.date.outputs.year }}/${{ steps.date.outputs.month }}/${{ steps.date.outputs.date }}-.md

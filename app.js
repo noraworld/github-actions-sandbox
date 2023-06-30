@@ -24,6 +24,8 @@ async function run() {
     console.log(`Body: ${comment.body}`);
     console.log('---');
   });
+
+  console.log(`filepath: ${process.env.FILEPATH}`)
 }
 
 run().catch((error) => {
