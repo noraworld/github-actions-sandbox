@@ -55,7 +55,7 @@ async function run() {
   }
 
   console.log(`process.env.ISSUE_BODY: ${process.env.ISSUE_BODY}`)
-  fs.writeFileSync(filename, process.env.ISSUE_BODY + existingContent + content);
+  fs.writeFileSync(filename, `${existingContent}${process.env.ISSUE_BODY}\n\n---\n\n${content}`);
 
   execSync('git config --global user.email "mail@noraworld.com"')
   execSync('git config --global user.name "Kosuke Aoki"')
