@@ -1,13 +1,22 @@
 name: issue_test
 on:
   issues:
-    types: [opened, edited, closed, reopened, labeled, unlabeled]
-  issue_comment:
-    types: [created, edited, deleted]
+    types:
+      - closed
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm install
       - name: This is issues test
         uses: secondnoraworld/github-actions-issues-sample@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
