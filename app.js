@@ -40,7 +40,7 @@ async function run() {
 
   execSync('git config --global user.email "mail@noraworld.com"')
   execSync('git config --global user.name "Kosuke Aoki"')
-  execSync(`git add ${filename}`)
+  execSync(`git add "${filename}"`)
   execSync(`git commit -m "Add ${filename}"`)
   execSync('git push')
 }
