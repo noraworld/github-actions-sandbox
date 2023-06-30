@@ -29,11 +29,14 @@ async function run() {
   // console.log(`filepath: ${process.env.FILEPATH}`)
   const filename = process.env.FILEPATH
   const dir = path.dirname(filename)
+
+  const existingContent = fs.existsSync(filename) ? `${fs.readFileSync(filename)}\n# From issues\n` : ''
+
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
   }
 
-  fs.writeFileSync(filename, content);
+  fs.writeFileSync(filename, existingContent + content);
 
   execSync('git config --global user.email "mail@noraworld.com"')
   execSync('git config --global user.name "Kosuke Aoki"')
