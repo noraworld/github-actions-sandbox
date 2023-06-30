@@ -8,25 +8,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Get current date and time
-        env:
-          TZ: "Asia/Tokyo"
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: get year
+        run: echo "date=$(cut -d '-' -f1 <<< ${{ github.event.issue.title }})" >> $YEAR
 
-      - name: year
-        env:
-          TZ: "Asia/Tokyo"
-        id: year
-        run: echo "::set-output name=year::$(date +'%Y')"
-
-      - name: month
-        env:
-          TZ: "Asia/Tokyo"
-        id: month
-        run: echo "::set-output name=month::$(date +'%m')"
+      - name: get month
+        run: echo "date=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> $MONTH
 
       - name: This is issues test
         uses: secondnoraworld/github-actions-issues-sample@main
         with:
-          filepath: _posts/${{ steps.year.outputs.year }}/${{ steps.month.outputs.month }}/${{ github.event.issue.title }}-.md
+          filepath: _posts/$YEAR/$MONTH/${{ github.event.issue.title }}-.md
