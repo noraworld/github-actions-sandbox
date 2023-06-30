@@ -14,11 +14,29 @@ async function run() {
   // console.log(issueNumber)
   // const issueNumber = process.env.GITHUB_EVENT.issue.number;
 
-  const { data: comments } = await octokit.issues.listComments({
-    owner,
-    repo,
-    issue_number: issueNumber,
-  });
+  // const { data: comments } = await octokit.issues.listComments({
+  //   owner,
+  //   repo,
+  //   issue_number: issueNumber,
+  // });
+
+  let comments = []
+  let page = 1
+  const perPage = 100
+  let response = null
+
+  do {
+    response = await octokit.issues.listComments({
+      owner,
+      repo,
+      issue_number: issueNumber,
+      page,
+      per_page: perPage
+    })
+
+    comments = comments.concat(response.data)
+    page++
+  } while (response.data.length === perPage)
 
   let content = ''
   comments.forEach((comment) => {
