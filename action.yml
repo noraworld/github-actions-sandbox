@@ -29,6 +29,8 @@ inputs:
     description: Time format
     required: false
     default: MMM d, yyyy, h:mm a ZZZZ
+    # GitHub comments style: "MMM d, yyyy, h:mm a ZZZZ"
+    # Twitter style:         "h:mm a · MMM d, yyyy"
 
 runs:
   using: "composite"
