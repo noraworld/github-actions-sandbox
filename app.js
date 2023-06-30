@@ -1,4 +1,6 @@
 const { Octokit } = require('@octokit/rest');
+const fs = require('fs');
+const { execSync } = require('child_process');
 
 async function run() {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
@@ -17,15 +19,22 @@ async function run() {
     issue_number: issueNumber,
   });
 
+  const content = ''
   comments.forEach((comment) => {
     console.log(`comment: ${JSON.stringify(comment)}`);
-    console.log(`Comment ID: ${comment.id}`);
-    console.log(`Author: ${comment.user.login}`);
-    console.log(`Body: ${comment.body}`);
-    console.log('---');
+    content += `${comment.body}\n\n---\n\n`
   });
 
-  console.log(`filepath: ${process.env.FILEPATH}`)
+  // console.log(`filepath: ${process.env.FILEPATH}`)
+  const filename = process.env.FILEPATH
+
+  fs.writeFileSync(filename, content);
+
+  execSync('git config --global user.email "mail@noraworld.com"')
+  execSync('git config --global user.name "Kosuke Aoki"')
+  execSync(`git add ${filename}`)
+  execSync(`git commit -m "Add ${filename}"`)
+  execSync('git push')
 }
 
 run().catch((error) => {
