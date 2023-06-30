@@ -1,7 +1,7 @@
 name: "This is issues test"
 description: "This is issues test"
 runs:
-  using: "node16"
+  using: "composite"
   steps:
     - name: Check out repository
       uses: actions/checkout@v2
