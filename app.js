@@ -46,10 +46,10 @@ async function run() {
 
   fs.writeFileSync(filename, `${existingContent}${process.env.ISSUE_BODY}\n\n---\n\n${content}`)
 
-  execSync('git config --global user.email "mail@noraworld.com"')
-  execSync('git config --global user.name "Kosuke Aoki"')
+  execSync(`git config --global user.name "${process.env.COMMITTER_NAME}"`)
+  execSync(`git config --global user.email "${process.env.COMMITTER_EMAIL}"`)
   execSync(`git add "${filename}"`)
-  execSync(`git commit -m "Add ${filename}"`)
+  execSync(`git commit -m "${filename}"`)
   execSync('git push')
 }
 

@@ -3,8 +3,16 @@ description: "This is issues test"
 
 inputs:
   filepath:
-    description: "filepath"
+    description: Specify the filename to be created or modified
     required: true
+  committer_name:
+    description: This value will be used for git commit
+    required: false
+    default: GitHub Actions
+  committer_email:
+    description: This value will be used for git commit
+    required: false
+    default: actions@github.com
 
 runs:
   using: "composite"
@@ -26,3 +34,5 @@ runs:
         ISSUE_BODY: ${{ github.event.issue.body }}
         GITHUB_ACTION_PATH: ${{ github.action_path }}
         FILEPATH: ${{ inputs.filepath }}
+        COMMITTER_NAME: ${{ inputs.committer_name }}
+        COMMITTER_EMAIL: ${{ inputs.committer_email }}

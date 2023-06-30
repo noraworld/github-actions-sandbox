@@ -18,3 +18,5 @@ jobs:
         uses: secondnoraworld/github-actions-issues-sample@main
         with:
           filepath: _posts/${{ env.YEAR }}/${{ env.MONTH }}/${{ github.event.issue.title }}-.md
+          committer_name: Kosuke Aoki
+          committer_email: mail@noraworld.com
