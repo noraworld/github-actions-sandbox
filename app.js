@@ -5,6 +5,7 @@ const fs = require('fs')
 const { execSync } = require('child_process')
 const path = require('path')
 const { DateTime } = require('luxon')
+const newline = '\n'
 
 async function run() {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
@@ -33,24 +34,24 @@ async function run() {
 
   const filename = process.env.FILEPATH
   const dir = path.dirname(filename)
-  const existingContent = fs.existsSync(filename) ? `${fs.readFileSync(filename)}\n${process.env.EXTRA_TEXT_WHEN_MODIFIED}\n` : ''
-  const issueBody = process.env.ISSUE_BODY ? `${process.env.ISSUE_BODY}\n` : ''
+  const existingContent = fs.existsSync(filename) ? `${fs.readFileSync(filename)}${newline}${process.env.EXTRA_TEXT_WHEN_MODIFIED}${newline}` : ''
+  const issueBody = process.env.ISSUE_BODY ? `${process.env.ISSUE_BODY}${newline}` : ''
 
   let content = ''
   let isFirstComment = true
   comments.forEach((comment) => {
     if (!isFirstComment || issueBody) {
-      content += '\n---\n\n'
+      content += `${newline}---${newline}${newline}`
     }
     isFirstComment = false
 
     content += comment.body
 
     if (process.env.WITH_DATE) {
-      content += `\n\n> ${formattedDateTime(comment.created_at)}`
+      content += `${newline}${newline}> ${formattedDateTime(comment.created_at)}`
     }
 
-    content += '\n'
+    content += `${newline}`
   })
 
   if (!fs.existsSync(dir)) {
