@@ -34,10 +34,19 @@ async function run() {
     page++
   } while (response.data.length === perPage)
 
-  const filename = process.env.FILEPATH
-  const dir = path.dirname(filename)
-  const existingContent = fs.existsSync(filename) ? `${fs.readFileSync(filename)}${newline}${process.env.EXTRA_TEXT_WHEN_MODIFIED}${newline}` : ''
+  const filepath = process.env.FILEPATH
+  const dir = path.dirname(filepath)
   const issueBody = process.env.ISSUE_BODY ? `${process.env.ISSUE_BODY}${newline}` : ''
+
+  let existingContent = ''
+  let commitMessage = ''
+  if (fs.existsSync(filepath)) {
+    existingContent = `${fs.readFileSync(filepath)}${newline}${process.env.EXTRA_TEXT_WHEN_MODIFIED}${newline}`
+    commitMessage = `Update ${path.basename(filepath)}`
+  }
+  else {
+    commitMessage = `Add ${path.basename(filepath)}`
+  }
 
   let content = ''
   let isFirstComment = true
@@ -60,12 +69,12 @@ async function run() {
     fs.mkdirSync(dir, { recursive: true })
   }
 
-  fs.writeFileSync(filename, `${existingContent}${issueBody}${content}`)
+  fs.writeFileSync(filepath, `${existingContent}${issueBody}${content}`)
 
   execSync(`git config --global user.name "${process.env.COMMITTER_NAME}"`)
   execSync(`git config --global user.email "${process.env.COMMITTER_EMAIL}"`)
-  execSync(`git add "${filename}"`)
-  execSync(`git commit -m "${filename}"`)
+  execSync(`git add "${filepath}"`)
+  execSync(`git commit -m "${commitMessage}"`)
   execSync('git push')
 }
 
