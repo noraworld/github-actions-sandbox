@@ -5,7 +5,9 @@ const fs = require('fs')
 const { execSync } = require('child_process')
 const path = require('path')
 const { DateTime } = require('luxon')
-const newline = '\r\n'
+// When "\n" is used, GitHub will warn you of the following:
+// We’ve detected the file has mixed line endings. When you commit changes we will normalize them to Windows-style (CRLF).
+const newline = '\r'
 
 async function run() {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
