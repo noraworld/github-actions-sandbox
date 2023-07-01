@@ -5,7 +5,7 @@ const fs = require('fs')
 const { execSync } = require('child_process')
 const path = require('path')
 const { DateTime } = require('luxon')
-const newline = '\n'
+const newline = '\r\n'
 
 async function run() {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
