@@ -63,3 +63,4 @@ runs:
         WITH_DATE: ${{ inputs.with_date }}
         TIMEZONE: ${{ inputs.timezone }}
         TIME_FORMAT: ${{ inputs.time_format }}
+        GITHUB_TOKEN: ${{ github.token }}
