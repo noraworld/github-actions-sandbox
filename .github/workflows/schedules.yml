@@ -19,7 +19,7 @@ jobs:
           date '+%Y-%m-%d'
           date '+%Y-%m-%d' --date '1 day'
           gh issue create --title "$(date '+%Y-%m-%d' --date '1 day')" --body ""
-          gh issue list | grep $(date '+%Y-%m-%d') | awk '{ print $1 }' | xargs -I {} gh issue close {}
+          gh issue list --search $(date '+%Y-%m-%d') | awk '{ print $1 }' | xargs -I {} gh issue close {}
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
