@@ -12,7 +12,7 @@ jobs:
       - name: cron test
         # Note that the timezone is UTC.
         run: |
-          gh issue create --title "$(date '+%Y-%m-%d' --date '1 day')"
+          gh issue create --title "$(date '+%Y-%m-%d' --date '1 day')" --body ""
           gh issue list | grep $(date '+%Y-%m-%d') | awk '{ print $1 }' | xargs -I {} gh issue close {}
         shell: sh
         env:
