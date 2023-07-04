@@ -49,8 +49,8 @@ async function run() {
   }
 
   let header = ''
-  if (existingContent && process.env.WITH_HEADER) {
-    header = process.env.WITH_HEADER
+  if (!existingContent && process.env.WITH_HEADER) {
+    header = `${process.env.WITH_HEADER}${newline}${newline}`
   }
 
   let content = ''
