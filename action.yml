@@ -36,6 +36,9 @@ inputs:
     # Twitter style:
     #   format:  "h:mm a · MMM d, yyyy"
     #   example: "6:55 PM · Jun 30, 2023"
+  with_header:
+    required: false
+    default: false
 
 runs:
   using: "composite"
@@ -64,3 +67,4 @@ runs:
         TIMEZONE: ${{ inputs.timezone }}
         TIME_FORMAT: ${{ inputs.time_format }}
         GITHUB_TOKEN: ${{ github.token }}
+        WITH_HEADER: ${{ inputs.with_header }}
