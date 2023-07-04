@@ -1,22 +1,22 @@
-name: schedule_test
+# name: schedule_test
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
-
-      - name: cron test
-        # Note that the timezone is UTC.
-        run: |
-          gh issue create --title "$(date '+%Y-%m-%d' --date '1 day')" --body ""
-          gh issue list --search $(date '+%Y-%m-%d') | awk '{ print $1 }' | xargs -I {} gh issue close {}
-        shell: sh
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out repository
+#         uses: actions/checkout@v2
+#
+#       - name: cron test
+#         # Note that the timezone is UTC.
+#         run: |
+#           gh issue create --title "$(date '+%Y-%m-%d' --date '1 day')" --body ""
+#           gh issue list --search $(date '+%Y-%m-%d') | awk '{ print $1 }' | xargs -I {} gh issue close {}
+#         shell: sh
+#         env:
+#           GH_TOKEN: ${{ secrets.GH_TOKEN }}
