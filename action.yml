@@ -38,7 +38,7 @@ inputs:
     #   example: "6:55 PM · Jun 30, 2023"
   with_header:
     required: false
-    default: false
+    default: ''
 
 runs:
   using: "composite"
