@@ -13,11 +13,7 @@ jobs:
       - name: cron test
         # Note that the timezone is UTC.
         run: |
-          gh issue create --title "test2" --body "
-          # チェックリスト
-          * [ ] hello world
-          * [ ] foo bar
-          * [ ] hello again"
+          gh issue create --title "test4" --body "# チェックリスト\r\n* [ ] hello world\r\n* [ ] foo bar\r\n* [ ] hello again"
           # gh issue create --title "$(date '+%Y-%m-%d' --date '1 day')" --body ""
           # gh issue list --search $(date '+%Y-%m-%d') | awk '{ print $1 }' | xargs -I {} gh issue close {}
         shell: sh
