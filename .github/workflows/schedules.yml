@@ -13,7 +13,7 @@ jobs:
       - name: cron test
         # Note that the timezone is UTC.
         run: |
-          gh issue create --title "test7" --body "# チェックリスト
+          gh issue create --title "test8" --body "# チェックリスト
           * [ ] hello world
           * [ ] foo bar
           * [ ] hello again"
