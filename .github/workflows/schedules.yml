@@ -16,7 +16,7 @@ jobs:
           TEMPLATE=$(cat GH_ISSUE_TEMPLATES.md)
           TO_DO=$(gh issue list \
           --repo noraworld/to-do \
-          --label purchase \
+          --label tomorrow \
           --json title,url \
           --template '{{"\r\n"}}{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}')
 
