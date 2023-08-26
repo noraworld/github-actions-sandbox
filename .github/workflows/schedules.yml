@@ -14,13 +14,18 @@ jobs:
         # Note that the timezone is UTC.
         run: |
           TEMPLATE=$(cat GH_ISSUE_TEMPLATES.md)
-          TO_DO=$(gh issue list \
+          TO_DO_TODAY=$(gh issue list \
+          --repo noraworld/to-do \
+          --label purchase \
+          --json title,url \
+          --template '{{"\r\n"}}{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}')
+          TO_DO_TOMORROW=$(gh issue list \
           --repo noraworld/to-do \
           --label tomorrow \
           --json title,url \
           --template '{{"\r\n"}}{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}')
 
-          gh issue create --title "TO_DO VARIABLE" --body "$TEMPLATE$TO_DO"
+          gh issue create --title "TO_DO VARIABLE" --body "$TEMPLATE$TO_DO_TODAY$TO_DO_TOMORROW"
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
