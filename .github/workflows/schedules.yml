@@ -1,4 +1,4 @@
-name: schedule_test
+name: Stacker
 
 on:
   issues:
@@ -13,10 +13,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: cron test
-        # Note that the timezone is UTC.
+      - name: "stacker test"
         run: |
-          echo "* [ ] [${{ github.event.issue.title }}](${{ github.event.issue.url }})"
+          NUMBER=$(gh issue list --repo "noraworld/diary" --limit 1 | awk '{ print $1 }')
+          BODY=$(gh issue view --repo "noraworld/diary" --json body --jq .body "$NUMBER")
+          echo "* [ ] [${{ github.event.issue.title }}](${{ github.event.issue.url }})" > tmp.txt
+          export NEW=$(cat tmp.txt)
+          gh issue edit --repo "noraworld/diary" --body "$BODY$NEW" "$NUMBER"
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
