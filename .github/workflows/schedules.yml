@@ -15,7 +15,7 @@ jobs:
 
       - name: "stacker test"
         run: |
-          echo "{{ github.event.issue.issue_url }}"
+          echo "${{ github.event.issue.issue_url }}"
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
