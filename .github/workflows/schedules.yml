@@ -23,7 +23,7 @@ jobs:
           --repo noraworld/to-do \
           --label tomorrow \
           --json title,url \
-          --template '{{"\r\n"}}{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}')
+          --template '{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}')
 
           gh issue create --title "TO_DO VARIABLE" --body "$TEMPLATE$TO_DO_TODAY$TO_DO_TOMORROW"
         shell: sh
