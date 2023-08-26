@@ -15,11 +15,7 @@ jobs:
 
       - name: "stacker test"
         run: |
-          NUMBER=$(gh issue list --repo "noraworld/diary" --limit 1 | awk '{ print $1 }')
-          BODY=$(gh issue view --repo "noraworld/diary" --json body --jq .body "$NUMBER")
-          echo "* [ ] [${{ github.event.issue.title }}](${{ github.event.issue.url }})\r\n" > tmp.txt
-          export NEW=$(cat tmp.txt)
-          gh issue edit --repo "noraworld/diary" --body "$BODY$NEW" "$NUMBER"
+          echo "{{ github.event.issue.issue_url }}"
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
