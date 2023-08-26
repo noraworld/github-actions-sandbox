@@ -1,10 +1,13 @@
 name: schedule_test
 
 on:
-  push
+  issues:
+    types:
+      - labeled
 
 jobs:
   build:
+    if: github.event.label.name == 'foo'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -13,19 +16,7 @@ jobs:
       - name: cron test
         # Note that the timezone is UTC.
         run: |
-          TEMPLATE=$(cat GH_ISSUE_TEMPLATES.md)
-          TO_DO_TODAY=$(gh issue list \
-          --repo noraworld/to-do \
-          --label purchase \
-          --json title,url \
-          --template '{{"\r\n"}}{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}')
-          TO_DO_TOMORROW=$(gh issue list \
-          --repo noraworld/to-do \
-          --label tomorrow \
-          --json title,url \
-          --template '{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}')
-
-          gh issue create --title "TO_DO VARIABLE" --body "$TEMPLATE$TO_DO_TODAY$TO_DO_TOMORROW"
+          echo "* [ ] [${{ github.event.issue.title }}](${{ github.event.issue.url }})"
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
