@@ -163,7 +163,7 @@ function encompassWithQuote(str) {
 }
 
 function sanitizeBackQuote(str) {
-  return str.replace(/`/g, '\\`')
+  return str.replaceAll(/`/g, '\\`')
 }
 
 run().catch((error) => {
