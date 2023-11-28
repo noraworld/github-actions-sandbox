@@ -33,6 +33,7 @@ async function run() {
 
 function getComments() {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
+  console.info(`octokit = ${octokit}`)
 
   const repository = process.env.GITHUB_REPOSITORY
   const [ owner, repo ] = repository.split('/')
@@ -54,7 +55,6 @@ function getComments() {
 
     comments = comments.concat(response.data)
     page++
-    console.info(`reponse = ${response.data}`)
   } while (response.data.length === perPage)
 
   return comments
