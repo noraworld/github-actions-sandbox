@@ -11,7 +11,7 @@ const newline = '\r\n'
 
 async function run() {
   const issueBody = process.env.ISSUE_BODY ? `${process.env.ISSUE_BODY}${newline}` : ''
-  let comments = getComments()
+  let comments = await getComments()
   let content = buildContent(comments, issueBody)
   let modes = process.env.MODE.split(',').map((element) => element.trim())
 
