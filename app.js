@@ -122,6 +122,7 @@ function post(issueBody, content) {
   }
   else {
     targetIssueNumber = execSync(`gh issue list --repo "${targetIssueRepo}" --limit 1 | awk '{ print $1 }'`)
+    targetIssueNumber.trim()
   }
 
   let header = ''
