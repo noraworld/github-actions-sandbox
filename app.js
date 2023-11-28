@@ -54,7 +54,7 @@ function getComments() {
 
     comments = comments.concat(response.data)
     page++
-    console.info(`reponse = ${response}`)
+    console.info(`reponse = ${response.data}`)
   } while (response.data.length === perPage)
 
   return comments
