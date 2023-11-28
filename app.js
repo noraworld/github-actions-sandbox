@@ -102,7 +102,7 @@ function buildContent(comments, issueBody, withQuote) {
 }
 
 function commit(issueBody, content) {
-  const filepath = sanitizeBackQuote(process.env.FILEPATH)
+  const filepath = eliminateBackQuote(process.env.FILEPATH)
 
   let existingContent = ''
   let commitMessage = ''
@@ -164,6 +164,10 @@ function encompassWithQuote(str) {
 
 function sanitizeBackQuote(str) {
   return str.replaceAll(/`/g, '\\`')
+}
+
+function eliminateBackQuote(str) {
+  return str.replaceAll(/`/g, '')
 }
 
 run().catch((error) => {
