@@ -116,11 +116,12 @@ function commit(issueBody, content) {
 function post(issueBody, content) {
   let targetIssueRepo = process.env.TARGET_ISSUE_REPO ? process.env.ISSUE_REPO : process.env.GITHUB_REPOSITORY
 
+  let targetIssueNumber = ''
   if (process.env.TARGET_ISSUE_NUMBER && process.env.TARGET_ISSUE_NUMBER !== 'latest') {
-    let targetIssueNumber = process.env.TARGET_ISSUE_NUMBER
+    targetIssueNumber = process.env.TARGET_ISSUE_NUMBER
   }
   else {
-    let targetIssueNumber = execSync(`gh issue list --repo "${targetIssueRepo}" --limit 1 | awk '{ print $1 }'`)
+    targetIssueNumber = execSync(`gh issue list --repo "${targetIssueRepo}" --limit 1 | awk '{ print $1 }'`)
   }
   console.info(`targetIssueNumber = ${targetIssueNumber}`)
 
