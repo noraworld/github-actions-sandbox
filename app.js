@@ -102,7 +102,7 @@ function buildContent(comments, issueBody, withQuote) {
 }
 
 function commit(issueBody, content) {
-  const filepath = eliminateBackQuote(process.env.FILEPATH)
+  const filepath = sanitizeBackQuote(process.env.FILEPATH)
 
   let existingContent = ''
   let commitMessage = ''
