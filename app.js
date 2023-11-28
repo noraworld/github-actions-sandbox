@@ -22,13 +22,13 @@ async function run() {
       case 'file':
         withQuote = (process.env.WITH_QUOTE.includes('file')) ? true : false
         issueBody = buildIssueBody(withQuote)
-        content = buildContent(comments, issueBody)
+        content = buildContent(comments, issueBody, withQuote)
         commit(issueBody, content)
         break
       case 'issue':
         withQuote = (process.env.WITH_QUOTE.includes('issue')) ? true : false
         issueBody = buildIssueBody(withQuote)
-        content = buildContent(comments, issueBody)
+        content = buildContent(comments, issueBody, withQuote)
         post(issueBody, content)
         break
       default:
