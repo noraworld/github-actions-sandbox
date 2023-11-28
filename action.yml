@@ -1,7 +1,15 @@
-name: "This is issues test"
-description: "This is issues test"
+name: Issue Recorder
+description: Save all comments on an issue to a file in your repository
+author: noraworld
+branding:
+  icon: circle
+  color: purple
 
 inputs:
+  mode:
+    description: Specify where to save the issues
+    required: false
+    default: file
   filepath:
     description: Specify the filename to be created or modified
     required: true
@@ -17,6 +25,14 @@ inputs:
     description: When the file already exists, this string will be added before the content
     required: false
     default: "# From issues"
+  target_issue_repo:
+    description: Select a repository with a username whose issue you want to transfer
+    required: false
+    default: ""
+  target_issue_number:
+    description: Select an issue number
+    required: false
+    default: ""
   with_date:
     description: Whether to include the date and time
     required: false
@@ -37,6 +53,7 @@ inputs:
     #   format:  "h:mm a · MMM d, yyyy"
     #   example: "6:55 PM · Jun 30, 2023"
   with_header:
+    description: Prepend a header content at the beginning of a file
     required: false
     default: ''
 
@@ -45,26 +62,29 @@ runs:
   steps:
     - name: Check out repository
       uses: actions/checkout@v2
+
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '16'
-    # - name: Install dependencies
-    #   run: npm install
-    #   shell: sh
-    - name: This is issues test
+
+    - name: Track issues
       run: node $GITHUB_ACTION_PATH/app.js
       shell: sh
       env:
+        GITHUB_TOKEN: ${{ github.token }}
         ISSUE_NUMBER: ${{ github.event.issue.number }}
+        ISSUE_TITLE: ${{ github.event.issue.title }}
         ISSUE_BODY: ${{ github.event.issue.body }}
         GITHUB_ACTION_PATH: ${{ github.action_path }}
+        MODE: ${{ inputs.mode }}
         FILEPATH: ${{ inputs.filepath }}
         COMMITTER_NAME: ${{ inputs.committer_name }}
         COMMITTER_EMAIL: ${{ inputs.committer_email }}
         EXTRA_TEXT_WHEN_MODIFIED: ${{ inputs.extra_text_when_modified }}
+        TARGET_ISSUE_REPO: ${{ inputs.target_issue_repo }}
+        TARGET_ISSUE_NUMBER: ${{ inputs.target_issue_number }}
         WITH_DATE: ${{ inputs.with_date }}
         TIMEZONE: ${{ inputs.timezone }}
         TIME_FORMAT: ${{ inputs.time_format }}
-        GITHUB_TOKEN: ${{ github.token }}
         WITH_HEADER: ${{ inputs.with_header }}
