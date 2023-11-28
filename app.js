@@ -102,7 +102,7 @@ function buildContent(comments, issueBody, withQuote) {
 }
 
 function commit(issueBody, content) {
-  const filepath = process.env.FILEPATH
+  const filepath = convertSpaceIntoHyphen(eliminateBackQuote(process.env.FILEPATH))
 
   let existingContent = ''
   let commitMessage = ''
@@ -170,6 +170,10 @@ function sanitizeBackQuote(str) {
 
 function eliminateBackQuote(str) {
   return str.replaceAll(/`/g, '')
+}
+
+function convertSpaceIntoHyphen(str) {
+  return str.replaceAll(/\s/g, '-')
 }
 
 run().catch((error) => {
