@@ -114,7 +114,7 @@ function commit(issueBody, content) {
 }
 
 function post(issueBody, content) {
-  targetIssueRepo = process.env.TARGET_ISSUE_REPO ? process.env.ISSUE_REPO : process.env.GITHUB_REPOSITORY
+  let targetIssueRepo = process.env.TARGET_ISSUE_REPO ? process.env.ISSUE_REPO : process.env.GITHUB_REPOSITORY
 
   if (process.env.TARGET_ISSUE_NUMBER && process.env.TARGET_ISSUE_NUMBER !== 'latest') {
     targetIssueNumber = process.env.TARGET_ISSUE_NUMBER
