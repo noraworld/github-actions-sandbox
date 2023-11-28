@@ -1,11 +1,12 @@
-name: issue_test
+name: Issue Recorder
+
 on:
   issues:
     types:
       - closed
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: get year
@@ -14,8 +15,8 @@ jobs:
       - name: get month
         run: echo "MONTH=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
 
-      - name: This is issues test
-        uses: noraworld/github-actions-issues-sample@main
+      - name: This is a test for Issue Recorder
+        uses: noraworld/issue-recorder@main
         with:
           filepath: _posts/${{ env.YEAR }}/${{ env.MONTH }}/${{ github.event.issue.title }}-.md
           committer_name: Kosuke Aoki
