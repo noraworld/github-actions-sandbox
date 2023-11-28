@@ -69,6 +69,7 @@ function buildContent(comments, issueBody) {
     }
     isFirstComment = false
 
+    console.log(`comment = ${comment}`)
     content += comment.body
 
     if (process.env.WITH_DATE) {
