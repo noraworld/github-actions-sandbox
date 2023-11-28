@@ -70,7 +70,7 @@ function buildContent(comments, issueBody) {
     isFirstComment = false
 
     console.log(`comment = ${comment.body}`)
-    content += comment.body
+    content += comment.body.replaceAll(/\r\n/g, '$&>')
 
     if (process.env.WITH_DATE) {
       content += `${newline}${newline}> ${formattedDateTime(comment.created_at)}`
