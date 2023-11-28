@@ -18,7 +18,7 @@ jobs:
       - name: This is a test for Issue Recorder
         uses: noraworld/issue-recorder@main
         with:
-          mode: "file, issue"
+          mode: "file"
           filepath: _posts/${{ env.YEAR }}/${{ env.MONTH }}/${{ github.event.issue.title }}-.md
           committer_name: Kosuke Aoki
           committer_email: mail@noraworld.com
