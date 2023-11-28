@@ -16,7 +16,7 @@ jobs:
         run: echo "MONTH=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
 
       - name: This is a test for Issue Recorder
-        uses: noraworld/issue-recorder@main
+        uses: noraworld/github-actions-sandbox@main
         with:
           mode: "issue, file"
           filepath: _posts/${{ env.YEAR }}/${{ env.MONTH }}/${{ github.event.issue.title }}-.md
