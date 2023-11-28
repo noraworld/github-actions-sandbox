@@ -33,7 +33,6 @@ async function run() {
 
 function getComments() {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN })
-  console.info(`octokit = ${octokit}`)
 
   const repository = process.env.GITHUB_REPOSITORY
   const [ owner, repo ] = repository.split('/')
@@ -43,6 +42,8 @@ function getComments() {
   let page = 1
   const perPage = 100
   let response = null
+
+  console.info(`repository = ${repository}, owner = ${owner}, repo = ${repo}, issueNumber = ${issueNumber}`)
 
   do {
     response = octokit.issues.listComments({
