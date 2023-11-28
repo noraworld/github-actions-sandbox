@@ -68,7 +68,7 @@ function buildContent(comments, issueBody) {
 
   comments.forEach((comment) => {
     if (!isFirstComment || issueBody) {
-      content += process.env.WITH_QUOTE ? `>${newline}>---${newline}>${newline}` : `${newline}---${newline}${newline}`
+      content += process.env.WITH_QUOTE ? `${newline}>---${newline}>${newline}` : `${newline}---${newline}${newline}`
     }
     isFirstComment = false
 
@@ -142,7 +142,7 @@ function formattedDateTime(timestamp) {
 }
 
 function encompassWithQuote(str) {
-  return str.replaceAll(/\r\n/g, '$&>')
+  return `>${str.replaceAll(/\r\n/g, '$&>')}`
 }
 
 run().catch((error) => {
