@@ -104,7 +104,7 @@ function buildContent(comments, issueBody, withQuote) {
 function commit(issueBody, content) {
   // Node.js Stream doesn't work if a filename contains back quotes, even if they are sanitized correctly.
   // Even if it were to work properly, back quotes shouldn't be used for a filename.
-  const filepath = getFilepath()
+  const filepath = buildFilepath()
 
   let existingContent = ''
   let commitMessage = ''
@@ -154,7 +154,7 @@ function post(issueBody, content) {
   execSync(`gh issue comment --repo "${targetIssueRepo}" "${targetIssueNumber}" --body "${header}${title}${issueBody}${content}"`)
 }
 
-function getFilepath() {
+function buildFilepath() {
   let filepath = ''
 
   switch (process.env.FILEPATH) {
