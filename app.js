@@ -153,6 +153,7 @@ function post(issueBody, content) {
 
   let title = ''
   if (process.env.WITH_TITLE) {
+    // TODO: Is sanitizeBackQuote() necessary?
     title = `# ✅ [${sanitizeBackQuote(process.env.ISSUE_TITLE)}](${process.env.ISSUE_URL})${newline}`
   }
 
