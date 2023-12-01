@@ -16,9 +16,9 @@ jobs:
         run: echo "MONTH=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
 
       - name: This is a test for Issue Recorder
-        uses: noraworld/github-actions-sandbox@main
+        uses: noraworld/issue-recorder@main
         with:
-          mode: "issue, file"
+          mode: "file, issue"
           # filepath: _posts/${{ env.YEAR }}/${{ env.MONTH }}/${{ github.event.issue.title }}-.md
           # filepath: "issues/${{ github.event.issue.number }}_${{ github.event.issue.title }}.md"
           committer_name: Kosuke Aoki
@@ -33,4 +33,3 @@ jobs:
           with_quote: issue
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          TITLE: ${{ github.event.issue.title }}
