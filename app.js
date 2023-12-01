@@ -157,7 +157,10 @@ function post(issueBody, content) {
     title = `# ✅ [${sanitizeBackQuote(process.env.ISSUE_TITLE)}](${process.env.ISSUE_URL})${newline}`
   }
 
-  execSync(`gh issue comment --repo "${targetIssueRepo}" "${targetIssueNumber}" --body "${title}${issueBody}${content}"`)
+  let tmpFile = 'tmp.md'
+  fs.writeFileSync(tmpFile, `${title}${issueBody}${content}`)
+
+  execSync(`gh issue comment --repo "${targetIssueRepo}" "${targetIssueNumber}" --body-file "${tmpFile}"`)
 }
 
 function buildFilepath() {
