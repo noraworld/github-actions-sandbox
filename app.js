@@ -167,7 +167,7 @@ function post(issueBody, content) {
     fold = `<details><summary>${process.env.FOLD_SUMMARY}</summary>${newline}${newline}`
     foldEnd = `</details>${newline}`
   }
-
+console.log(issueBody.length + content.length)
   let tmpFile = 'tmp.md'
   fs.writeFileSync(tmpFile, `${title}${fold}${issueBody}${content}${foldEnd}`)
 
