@@ -13,6 +13,7 @@ const tmpFile = 'tmp.md'
 async function run() {
   let modes = process.env.MODE.split(',').map((element) => element.trim())
 
+  let comments
   let withQuote
   let issueBody
   let content
@@ -21,14 +22,14 @@ async function run() {
     // It seems like some function invocations are redundant, but they are necessary.
     switch (mode) {
       case 'file':
-        let comments = await getComments()
+        comments = await getComments()
         withQuote = (process.env.WITH_QUOTE.includes('file')) ? true : false
         issueBody = buildIssueBody(withQuote)
         content = buildContent(comments, issueBody, withQuote)
         commit(issueBody, content)
         break
       case 'issue':
-        let comments = await getComments()
+        comments = await getComments()
         withQuote = (process.env.WITH_QUOTE.includes('issue')) ? true : false
         issueBody = buildIssueBody(withQuote)
         content = buildContent(comments, issueBody, withQuote)
