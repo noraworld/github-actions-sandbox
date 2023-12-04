@@ -8,6 +8,7 @@ const { DateTime } = require('luxon')
 // When "\n" is used, GitHub will warn you of the following:
 // We’ve detected the file has mixed line endings. When you commit changes we will normalize them to Windows-style (CRLF).
 const newline = '\r\n'
+const tmpFile = 'tmp.md'
 
 async function run() {
   let comments = await getComments()
@@ -138,6 +139,24 @@ function commit(issueBody, content) {
   execSync(`git add "${filepath}"`)
   execSync(`git commit -m "${commitMessage}"`)
   execSync('git push')
+
+  if (process.env.NOTIFICATION_COMMENT) {
+    // https://docs.github.com/en/actions/learn-github-actions/variables
+    let notification_comment =
+      process.env.NOTIFICATION_COMMENT
+      .replaceAll(
+        '<FILE_PATH>',
+        filepath
+      )
+      .replaceAll(
+        '<FILE_URL>',
+        `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.GITHUB_BASE_REF}/${filepath}`
+      )
+
+    fs.writeFileSync(tmpFile, notification_comment)
+    execSync(`gh issue comment "${process.env.ISSUE_NUMBER}" --body-file "${tmpFile}"`)
+    fs.unlinkSync(tmpFile)
+  }
 }
 
 function post(issueBody, content) {
@@ -168,10 +187,9 @@ function post(issueBody, content) {
     foldEnd = `</details>${newline}`
   }
 
-  let tmpFile = 'tmp.md'
   fs.writeFileSync(tmpFile, `${title}${fold}${issueBody}${content}${foldEnd}`)
-
   execSync(`gh issue comment --repo "${targetIssueRepo}" "${targetIssueNumber}" --body-file "${tmpFile}"`)
+  fs.unlinkSync(tmpFile)
 }
 
 function buildFilepath() {
