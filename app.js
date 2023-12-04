@@ -150,10 +150,8 @@ function commit(issueBody, content) {
       )
       .replaceAll(
         '<FILE_URL>',
-        `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.GITHUB_BASE_REF}/${filepath}`
+        `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.GITHUB_REF_NAME}/${filepath}`
       )
-
-    console.log(`GITHUB_BASE_REF = ${process.env.GITHUB_BASE_REF}, GITHUB_HEAD_REF = ${process.env.GITHUB_HEAD_REF}, GITHUB_REF = ${process.env.GITHUB_REF}, GITHUB_REF_NAME = ${process.env.GITHUB_REF_NAME}, GITHUB_REF_PROTECTED = ${process.env.GITHUB_REF_PROTECTED}, `)
 
     fs.writeFileSync(tmpFile, notification_comment)
     execSync(`gh issue comment "${process.env.ISSUE_NUMBER}" --body-file "${tmpFile}"`)
