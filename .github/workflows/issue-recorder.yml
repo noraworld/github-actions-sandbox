@@ -26,8 +26,8 @@ jobs:
           extra_text_when_modified: "# issue からこんにちはです"
           # target_issue_repo: noraworld/diary
           # target_issue_number: latest
-          # fold_threshold: 1000
-          fold_summary: ここをクリックすると展開できます
+          fold_threshold: 1000
+          # fold_summary: ここをクリックすると展開できます
           with_date: true
           timezone: Asia/Tokyo
           time_format: h:mm a · MMM d, yyyy (ZZZZ)
