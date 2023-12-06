@@ -43,15 +43,15 @@ jobs:
           NUMBER=$(gh issue list --repo "noraworld/diary" --limit 1 | awk '{ print $1 }')
           BODY=$(gh issue view --repo "noraworld/diary" --json body --jq .body "$NUMBER")
 
-          if [ "$(echo "$BODY" | grep -cE "\[$TITLE\]\($URL\)")" -eq 0 ]; then
+          ESCAPED_TITLE=$( echo "$TITLE" | sed 's/[^^]/[&]/g; s/\^/\\^/g; s/\[\[/\[\\[/g; s/\]\]/\]\\]/g' )
+          ESCAPED_URL=$( echo "$URL"     | sed 's/[^^]/[&]/g; s/\^/\\^/g' )
+
+          if [ "$(echo "$BODY" | grep -cE "\[$ESCAPED_TITLE\]\($ESCAPED_URL\)")" -eq 0 ]; then
           gh issue edit --repo "noraworld/diary" --body "$BODY
           * [x] [$TITLE]($URL)
           " "$NUMBER"
           else
-          ESCAPED_TITLE=$( echo "$TITLE" | sed 's/[^^]/[&]/g; s/\^/\\^/g' )
-          ESCAPED_URL=$( echo "$URL"     | sed 's/[^^]/[&]/g; s/\^/\\^/g' )
           NEW_BODY=$( echo "$BODY" | sed -E "s/\* \[ \] (\[$ESCAPED_TITLE\]\($ESCAPED_URL\))/\* \[x\] \1/g" )
-
           gh issue edit --repo "noraworld/diary" --body "$NEW_BODY" "$NUMBER"
           fi
         shell: sh
