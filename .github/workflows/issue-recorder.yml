@@ -44,15 +44,15 @@ jobs:
           BODY=$(gh issue view --repo "noraworld/diary" --json body --jq .body "$NUMBER")
 
           if [ "$(echo "$BODY" | grep -cE "\[$TITLE\]\($URL\)")" -eq 0 ]; then
-            gh issue edit --repo "noraworld/diary" --body "$BODY
-            * [x] [$TITLE]($URL)
-            " "$NUMBER"
+          gh issue edit --repo "noraworld/diary" --body "$BODY
+          * [x] [$TITLE]($URL)
+          " "$NUMBER"
           else
-            ESCAPED_TITLE=$( echo "$TITLE" | sed 's/[^^]/[&]/g; s/\^/\\^/g' )
-            ESCAPED_URL=$( echo "$URL"     | sed 's/[^^]/[&]/g; s/\^/\\^/g' )
-            NEW_BODY=$( echo "$BODY" | sed -E "s/\* \[ \] (\[$ESCAPED_TITLE\]\($ESCAPED_URL\))/\* \[x\] \1/g" )
+          ESCAPED_TITLE=$( echo "$TITLE" | sed 's/[^^]/[&]/g; s/\^/\\^/g' )
+          ESCAPED_URL=$( echo "$URL"     | sed 's/[^^]/[&]/g; s/\^/\\^/g' )
+          NEW_BODY=$( echo "$BODY" | sed -E "s/\* \[ \] (\[$ESCAPED_TITLE\]\($ESCAPED_URL\))/\* \[x\] \1/g" )
 
-            gh issue edit --repo "noraworld/diary" --body "$NEW_BODY" "$NUMBER"
+          gh issue edit --repo "noraworld/diary" --body "$NEW_BODY" "$NUMBER"
           fi
         shell: sh
         env:
