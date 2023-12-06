@@ -47,12 +47,12 @@ jobs:
           echo "[$TITLE]($URL)"
 
           if [ "$(echo "$BODY" | grep -c "[$TITLE]($URL)")" -eq 0 ]; then
-            gh issue edit --repo "noraworld/diary" --body "$BODY
-            * [x] [$TITLE]($URL)
-            " "$NUMBER"
+          gh issue edit --repo "noraworld/diary" --body "$BODY
+          * [x] [$TITLE]($URL)
+          " "$NUMBER"
           else
-            BODY=$(echo "$BODY" | sed -E 's/\* \[ \] \[$TITLE\]\($URL\)/\* \[x\] \[$TITLE\]\($URL\)/g')
-            gh issue edit --repo "noraworld/diary" --body "$BODY" "$NUMBER"
+          BODY=$(echo "$BODY" | sed -E 's/\* \[ \] \[$TITLE\]\($URL\)/\* \[x\] \[$TITLE\]\($URL\)/g')
+          gh issue edit --repo "noraworld/diary" --body "$BODY" "$NUMBER"
           fi
         shell: sh
         env:
