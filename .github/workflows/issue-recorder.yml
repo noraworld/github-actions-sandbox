@@ -37,9 +37,12 @@ jobs:
           NUMBER=$(gh issue list --repo "noraworld/diary" --limit 1 | awk '{ print $1 }')
           BODY=$(gh issue view --repo "noraworld/diary" --json body --jq .body "$NUMBER")
 
+          # https://chat.openai.com/share/72f96556-1e59-4711-9a47-3eed72b8b184 (ja)
+          # https://chat.openai.com/share/1e516c7f-0382-4361-89c1-9be185bd7fb2 (ja)
           ESCAPED_TITLE=$( echo "$TITLE" | sed 's/[^^]/[&]/g; s/\^/\\^/g; s/\[\[/\[\\[/g; s/\]\]/\]\\]/g' )
           ESCAPED_URL=$( echo "$URL"     | sed 's/[^^]/[&]/g; s/\^/\\^/g' )
 
+          # Do not indent inside the condition.
           if [ "$(echo "$BODY" | grep -cE "\[$ESCAPED_TITLE\]\($ESCAPED_URL\)")" -eq 0 ]; then
           gh issue edit --repo "noraworld/diary" --body "$BODY
           * [x] [$TITLE]($URL)
