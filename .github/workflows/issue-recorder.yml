@@ -45,9 +45,9 @@ jobs:
 
           echo "$BODY"
           echo "[$TITLE]($URL)"
-          echo "$BODY" | grep -E "\[$TITLE\]\($URL\)"
+          echo "$BODY" | grep -cE "\[$TITLE\]\($URL\)"
 
-          if [ "$(echo "$BODY" | grep -c "[$TITLE]($URL)")" -eq 0 ]; then
+          if [ "$(echo "$BODY" | grep -cE "\[$TITLE\]\($URL\)")" -eq 0 ]; then
             gh issue edit --repo "noraworld/diary" --body "$BODY
             * [x] [$TITLE]($URL)
             " "$NUMBER"
