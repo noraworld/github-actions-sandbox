@@ -52,8 +52,13 @@ jobs:
             * [x] [$TITLE]($URL)
             " "$NUMBER"
           else
-            BODY=$(echo "$BODY" | sed -E 's/\* \[ \] \[$TITLE\]\($URL\)/\* \[x\] \[$TITLE\]\($URL\)/g')
-            gh issue edit --repo "noraworld/diary" --body "$BODY" "$NUMBER"
+            ESCAPED_TITLE=$(echo "$TITLE" | sed -E "s/\//\\\\\\\\\//g")
+            ESCAPED_URL=$(echo "$URL" | sed -E "s/\//\\\\\\\\\//g")
+            NEW_BODY=$(echo "$BODY" | sed -E "s/\* \[ \] \[$ESCAPED_TITLE\]\($ESCAPED_URL\)/aaaaaaaaaaaaaaa/g")
+            echo "$NEW_BODY"
+
+            # NEW_BODY=$(echo "$BODY" | sed -E 's/\* \[ \] \[$TITLE\]\($URL\)/\* \[x\] \[$TITLE\]\($URL\)/g')
+            # gh issue edit --repo "noraworld/diary" --body "$NEW_BODY" "$NUMBER"
           fi
         shell: sh
         env:
