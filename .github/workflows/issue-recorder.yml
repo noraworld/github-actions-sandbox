@@ -37,3 +37,22 @@ jobs:
           with_quote: issue
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Pile up today's to-do list on diary's issue
+        run: |
+          NUMBER=$(gh issue list --repo "noraworld/diary" --limit 1 | awk '{ print $1 }')
+          BODY=$(gh issue view --repo "noraworld/diary" --json body --jq .body "$NUMBER")
+
+          if [ "$(echo "$BODY" | grep -c "[$TITLE]($URL)")" -eq 0 ]; then
+            gh issue edit --repo "noraworld/diary" --body "$BODY
+            * [x] [$TITLE]($URL)
+            " "$NUMBER"
+          else
+            BODY=$(echo "$BODY" | sed -E 's/\* \[ \] \[$TITLE\]\($URL\)/\* \[x\] \[$TITLE\]\($URL\)/g')
+            gh issue edit --repo "noraworld/diary" --body "$BODY" "$NUMBER"
+          fi
+        shell: sh
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          TITLE: ${{ github.event.issue.title }}
+          URL: ${{ github.event.issue.html_url }}
