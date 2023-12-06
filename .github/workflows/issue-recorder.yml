@@ -52,9 +52,17 @@ jobs:
             * [x] [$TITLE]($URL)
             " "$NUMBER"
           else
-            ESCAPED_TITLE=$(echo "$TITLE" | sed -E "s/\//\\\\\\\\\//g")
-            ESCAPED_URL=$(echo "$URL" | sed -E "s/\//\\\\\\\\\//g")
-            NEW_BODY=$(echo "$BODY" | sed -E "s/\* \[ \] \[$ESCAPED_TITLE\]\($ESCAPED_URL\)/aaaaaaaaaaaaaaa/g")
+            #ESCAPED_TITLE=$(echo "$TITLE" | sed -E "s/\//\\\\\\\\\//g")
+            #ESCAPED_URL=$(echo "$URL" | sed -E "s/\//\\\\\\\\\//g")
+            #NEW_BODY=$(echo "$BODY" | sed -E "s/\* \[ \] \[$ESCAPED_TITLE\]\($ESCAPED_URL\)/aaaaaaaaaaaaaaa/g")
+            #echo "$NEW_BODY"
+
+            #ESCAPED_TITLE=$(gecho "$TITLE" | gsed -E "s/\//\\\\\\\\\//g")
+            #ESCAPED_URL=$(gecho "$URL" | gsed -E "s/\//\\\\\\\\\//g")
+            ESCAPED_TITLE=$(gecho "$TITLE" | gsed -E 's/[^^]/[&]/g; s/\^/\\^/g')
+            ESCAPED_URL=$(gecho "$URL" | gsed 's/[^^]/[&]/g; s/\^/\\^/g')
+            echo "$ESCAPED_TITLE $ESCAPED_URL"
+            NEW_BODY=$(gecho "$BODY" | gsed -E "s/\* \[ \] (\[$ESCAPED_TITLE\]\($ESCAPED_URL\))/\* \[x\] \1/g")
             echo "$NEW_BODY"
 
             # NEW_BODY=$(echo "$BODY" | sed -E 's/\* \[ \] \[$TITLE\]\($URL\)/\* \[x\] \[$TITLE\]\($URL\)/g')
