@@ -9,12 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: get year
-        run: echo "YEAR=$(cut -d '-' -f1 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
-
-      - name: get month
-        run: echo "MONTH=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
-
       - name: This is a test for Issue Recorder
         uses: noraworld/github-actions-sandbox@main
         with:
