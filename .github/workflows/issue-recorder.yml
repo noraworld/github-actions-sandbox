@@ -43,30 +43,16 @@ jobs:
           NUMBER=$(gh issue list --repo "noraworld/diary" --limit 1 | awk '{ print $1 }')
           BODY=$(gh issue view --repo "noraworld/diary" --json body --jq .body "$NUMBER")
 
-          echo "$BODY"
-          echo "[$TITLE]($URL)"
-          echo "$BODY" | grep -cE "\[$TITLE\]\($URL\)"
-
           if [ "$(echo "$BODY" | grep -cE "\[$TITLE\]\($URL\)")" -eq 0 ]; then
             gh issue edit --repo "noraworld/diary" --body "$BODY
             * [x] [$TITLE]($URL)
             " "$NUMBER"
           else
-            #ESCAPED_TITLE=$(echo "$TITLE" | sed -E "s/\//\\\\\\\\\//g")
-            #ESCAPED_URL=$(echo "$URL" | sed -E "s/\//\\\\\\\\\//g")
-            #NEW_BODY=$(echo "$BODY" | sed -E "s/\* \[ \] \[$ESCAPED_TITLE\]\($ESCAPED_URL\)/aaaaaaaaaaaaaaa/g")
-            #echo "$NEW_BODY"
+            ESCAPED_TITLE=$( echo "$TITLE" | sed 's/[^^]/[&]/g; s/\^/\\^/g' )
+            ESCAPED_URL=$( echo "$URL"     | sed 's/[^^]/[&]/g; s/\^/\\^/g' )
+            NEW_BODY=$( echo "$BODY" | sed -E "s/\* \[ \] (\[$ESCAPED_TITLE\]\($ESCAPED_URL\))/\* \[x\] \1/g" )
 
-            #ESCAPED_TITLE=$(echo "$TITLE" | sed -E "s/\//\\\\\\\\\//g")
-            #ESCAPED_URL=$(echo "$URL" | sed -E "s/\//\\\\\\\\\//g")
-            ESCAPED_TITLE=$(echo "$TITLE" | sed -E 's/[^^]/[&]/g; s/\^/\\^/g')
-            ESCAPED_URL=$(echo "$URL" | sed 's/[^^]/[&]/g; s/\^/\\^/g')
-            echo "$ESCAPED_TITLE $ESCAPED_URL"
-            NEW_BODY=$(echo "$BODY" | sed -E "s/\* \[ \] (\[$ESCAPED_TITLE\]\($ESCAPED_URL\))/\* \[x\] \1/g")
-            echo "$NEW_BODY"
-
-            # NEW_BODY=$(echo "$BODY" | sed -E 's/\* \[ \] \[$TITLE\]\($URL\)/\* \[x\] \[$TITLE\]\($URL\)/g')
-            # gh issue edit --repo "noraworld/diary" --body "$NEW_BODY" "$NUMBER"
+            gh issue edit --repo "noraworld/diary" --body "$NEW_BODY" "$NUMBER"
           fi
         shell: sh
         env:
