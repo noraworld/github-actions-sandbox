@@ -27,7 +27,7 @@ inputs:
     required: false
     default: "# From issues"
   notification_comment:
-    description:
+    description: Specify the comment content to leave after saving to a file
     required: false
     default: ""
   target_issue_repo:
