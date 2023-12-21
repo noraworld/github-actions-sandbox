@@ -156,7 +156,8 @@ function commit(issueBody, content) {
       )
       .replaceAll(
         '<FILE_URL>',
-        `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.GITHUB_REF_NAME}/${filepath}`
+        // https://stackoverflow.com/questions/332872/encode-url-in-javascript#answer-332897
+        `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.GITHUB_REF_NAME}/${encodeURIComponent(filepath)}`
       )
 
     fs.writeFileSync(tmpFile, notification_comment)
