@@ -216,10 +216,10 @@ function buildFilepath() {
       if (Number.isInteger(dirB)) dirB--
       dirB = String(Math.floor(dirB) % 100).padStart(2, '0')
 
-      filepath = `issues/${dirA}/${dirB}/${issueNumber}_${sanitizeDoubleQuote(convertSpaceIntoHyphen(eliminateBackQuote(issueTitle)))}.md`
+      filepath = `issues/${dirA}/${dirB}/${issueNumber}_${convertSpaceIntoHyphen(eliminateBackQuote(issueTitle))}.md`
       break
     default:
-      filepath = sanitizeDoubleQuote(convertSpaceIntoHyphen(eliminateBackQuote(process.env.FILEPATH)))
+      filepath = convertSpaceIntoHyphen(eliminateBackQuote(process.env.FILEPATH))
       break
   }
 
