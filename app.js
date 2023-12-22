@@ -215,10 +215,10 @@ function buildFilepath() {
       if (Number.isInteger(dirB)) dirB--
       dirB = String(Math.floor(dirB) % 100).padStart(2, '0')
 
-      filepath = `issues/${dirA}/${dirB}/${issueNumber}_${convertSpaceIntoHyphen(eliminateBackQuote(issueTitle))}.md`
+      filepath = `issues/${dirA}/${dirB}/${issueNumber}_${sanitizeDoubleQuote(convertSpaceIntoHyphen(eliminateBackQuote(issueTitle)))}.md`
       break
     default:
-      filepath = convertSpaceIntoHyphen(eliminateBackQuote(process.env.FILEPATH))
+      filepath = sanitizeDoubleQuote(convertSpaceIntoHyphen(eliminateBackQuote(process.env.FILEPATH)))
       break
   }
 
@@ -258,6 +258,10 @@ function eliminateBackQuote(str) {
 
 function convertSpaceIntoHyphen(str) {
   return str.replaceAll(/\s/g, '-')
+}
+
+function sanitizeDoubleQuote(str) {
+  return str.replaceAll(/"/g, '\\"')
 }
 
 run().catch((error) => {
