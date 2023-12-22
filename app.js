@@ -143,8 +143,8 @@ function commit(issueBody, content) {
   console.log(execSync(`ls`).toString())
   execSync(`git config --global user.name "${process.env.COMMITTER_NAME}"`)
   execSync(`git config --global user.email "${process.env.COMMITTER_EMAIL}"`)
-  execSync(`git add "${filepath}"`)
-  execSync(`git commit -m "${commitMessage}"`)
+  execSync(`git add "${sanitizeDoubleQuote(filepath)}"`)
+  execSync(`git commit -m "${sanitizeDoubleQuote(commitMessage)}"`)
   execSync('git push')
 
   if (process.env.NOTIFICATION_COMMENT) {
