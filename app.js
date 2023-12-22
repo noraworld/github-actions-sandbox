@@ -140,6 +140,7 @@ function commit(issueBody, content) {
 
   fs.writeFileSync(filepath, `${header}${existingContent}${title}${issueBody}${content}`)
 
+  execSync(`ls`)
   execSync(`git config --global user.name "${process.env.COMMITTER_NAME}"`)
   execSync(`git config --global user.email "${process.env.COMMITTER_EMAIL}"`)
   execSync(`git add "${filepath}"`)
