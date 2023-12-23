@@ -265,7 +265,7 @@ function convertSpaceIntoHyphen(str) {
 function sanitizeShellSpecialCharacters(str) {
   return str
     .replaceAll(/"/g, '\\"')
-    .replaceAll(/\\/g, '\\')
+    .replaceAll(/\\/g, '\\\\')
 }
 
 run().catch((error) => {
