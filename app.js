@@ -218,6 +218,7 @@ function buildFilepath() {
       filepath = `issues/${dirA}/${dirB}/${issueNumber}_${convertSpaceIntoHyphen(eliminateBackQuote(issueTitle))}.md`
       break
     default:
+      console.log(process.env.FILEPATH)
       filepath = convertSpaceIntoHyphen(eliminateBackQuote(process.env.FILEPATH))
       break
   }
@@ -263,6 +264,7 @@ function convertSpaceIntoHyphen(str) {
 }
 
 function sanitizeShellSpecialCharacters(str) {
+  // https://stackoverflow.com/questions/3903488/javascript-backslash-in-variables-is-causing-an-error#answer-3903834
   return str
     .replaceAll(/"/g, '\\"')
     .replaceAll(/\\/g, '\\\\')
