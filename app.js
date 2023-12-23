@@ -206,7 +206,6 @@ function buildFilepath() {
       // https://github.com/noraworld/to-do/issues/173#issuecomment-1835656402
       const issueNumber = process.env.ISSUE_NUMBER
       const issueTitle  = process.env.ISSUE_TITLE
-      console.log(process.env.ISSUE_TITLE)
 
       let dirA = issueNumber / 10000
       if (Number.isInteger(dirA)) dirA--
@@ -260,7 +259,7 @@ function eliminateBackQuote(str) {
 }
 
 function convertSpaceIntoHyphen(str) {
-  return str.replaceAll(/\s/g, '-')
+  return str.replaceAll(/\s/g, '-').replaceAll(/\\/g, '\\\\')
 }
 
 function sanitizeShellSpecialCharacters(str) {
