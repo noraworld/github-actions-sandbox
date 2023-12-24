@@ -208,8 +208,10 @@ function buildFilepath() {
   switch (process.env.FILEPATH) {
     case 'default':
       // https://github.com/noraworld/to-do/issues/173#issuecomment-1835656402
+
       const issueNumber = process.env.ISSUE_NUMBER
-      const issueTitle  = buildFileTitle()
+      // There is no need to sanitize backslashes or invoke buildFileTitle().
+      const issueTitle = process.env.ISSUE_TITLE
 
       let dirA = issueNumber / 10000
       if (Number.isInteger(dirA)) dirA--
