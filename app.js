@@ -158,8 +158,6 @@ function commit(issueBody, content) {
         '<FILE_URL>',
         `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/blob/${process.env.GITHUB_REF_NAME}/${githubFlavoredPercentEncode(filepath)}`
       )
-      console.log(filepath)
-      console.log(filepath.replaceAll(/\?/g, '%3F').replaceAll(/\#/g, '%23').replaceAll(/\\/g, '%5C'))
 
     fs.writeFileSync(tmpFile, notification_comment)
     execSync(`gh issue comment "${process.env.ISSUE_NUMBER}" --body-file "${tmpFile}"`)
@@ -254,6 +252,7 @@ function githubFlavoredPercentEncode(str) {
   return str
     .replaceAll(/\?/g, '%3F')
     .replaceAll(/\#/g, '%23')
+    .replaceAll(/\\/g, '%5C')
 }
 
 function eliminateBackQuote(str) {
