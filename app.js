@@ -130,7 +130,7 @@ function commit(issueBody, content) {
 
   let title = ''
   if (process.env.WITH_TITLE) {
-    title = `# [${process.env.ISSUE_TITLE}](${process.env.ISSUE_URL})${newline}`
+    title = `# [${buildFileTitle()}](${process.env.ISSUE_URL})${newline}`
   }
 
   const dir = path.dirname(filepath)
@@ -178,7 +178,7 @@ function post(issueBody, content) {
 
   let title = ''
   if (process.env.WITH_TITLE) {
-    title = `# ✅ [${process.env.ISSUE_TITLE}](${process.env.ISSUE_URL})${newline}`
+    title = `# ✅ [${buildFileTitle()}](${process.env.ISSUE_URL})${newline}`
   }
 
   let fold = ''
@@ -198,6 +198,10 @@ function post(issueBody, content) {
   fs.unlinkSync(tmpFile)
 }
 
+function buildFileTitle() {
+  return process.env.ISSUE_TITLE.replaceAll(/\\/g, '\\\\')
+}
+
 function buildFilepath() {
   let filepath = ''
 
@@ -205,7 +209,7 @@ function buildFilepath() {
     case 'default':
       // https://github.com/noraworld/to-do/issues/173#issuecomment-1835656402
       const issueNumber = process.env.ISSUE_NUMBER
-      const issueTitle  = process.env.ISSUE_TITLE
+      const issueTitle  = buildFileTitle()
 
       let dirA = issueNumber / 10000
       if (Number.isInteger(dirA)) dirA--
