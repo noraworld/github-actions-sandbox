@@ -259,7 +259,7 @@ function eliminateBackQuote(str) {
 }
 
 function convertSpaceIntoHyphen(str) {
-  return str.replaceAll(/\s/g, '-').replaceAll(/\\/g, '\\\\')
+  return str.replaceAll(/\s/g, '-')
 }
 
 function sanitizeShellSpecialCharacters(str) {
