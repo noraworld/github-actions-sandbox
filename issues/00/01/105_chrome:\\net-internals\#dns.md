@@ -32,3 +32,9 @@
 このタスクの内容は [`issues/00/01/105_chrome:\\net-internals\#dns.md`](https://github.com/noraworld/github-actions-sandbox/blob/main/issues/00/01/105_chrome:\\net-internals\%23dns.md) に保存されました。
 
 > 1:41 PM · Dec 24, 2023 (GMT+9)
+
+---
+
+このタスクの内容は [`issues/00/01/105_chrome:\\net-internals\#dns.md`](https://github.com/noraworld/github-actions-sandbox/blob/main/issues/00/01/105_chrome:\\net-internals\%23dns.md) に保存されました。
+
+> 1:49 PM · Dec 24, 2023 (GMT+9)
