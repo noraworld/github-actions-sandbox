@@ -1,5 +1,5 @@
 ---
-name: カスタムテンプレート
+name: General
 about: これはカスタムテンプレートのサンプルです。
 title: デフォルトタイトル
 labels: bug
