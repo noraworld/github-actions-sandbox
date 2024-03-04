@@ -5,6 +5,7 @@ const fs = require('fs')
 const { execSync } = require('child_process')
 const path = require('path')
 const { DateTime } = require('luxon')
+const { Base64 } = require('js-base64')
 // When "\n" is used, GitHub will warn you of the following:
 // We’ve detected the file has mixed line endings. When you commit changes we will normalize them to Windows-style (CRLF).
 const newline = '\r\n'
@@ -112,7 +113,7 @@ function commit(issueBody, content) {
 
   let existingContent = ''
   let commitMessage = ''
-  if (fs.existsSync(filepath)) {
+  if (fileExists(filepath)) {
     if (!process.env.OVERWRITE_WHEN_MODIFIED) {
       existingContent = `${fs.readFileSync(filepath)}${newline}${process.env.EXTRA_TEXT_WHEN_MODIFIED}${newline}`
     }
@@ -133,18 +134,22 @@ function commit(issueBody, content) {
     title = `# [${buildFileTitle()}](${process.env.ISSUE_URL})${newline}`
   }
 
-  const dir = path.dirname(filepath)
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true })
-  }
+  // This might be unnecessary if you push a file with Octokit.
+  // https://blog.dennisokeeffe.com/blog/2020-06-22-using-octokit-to-create-files
+  // const dir = path.dirname(filepath)
+  // if (!fs.existsSync(dir)) {
+  //   fs.mkdirSync(dir, { recursive: true })
+  // }
 
-  fs.writeFileSync(filepath, `${header}${existingContent}${title}${issueBody}${content}`)
+  // fs.writeFileSync(filepath, `${header}${existingContent}${title}${issueBody}${content}`)
 
-  execSync(`git config --global user.name "${process.env.COMMITTER_NAME}"`)
-  execSync(`git config --global user.email "${process.env.COMMITTER_EMAIL}"`)
-  execSync(`git add "${sanitizeShellSpecialCharacters(filepath)}"`)
-  execSync(`git commit -m "${sanitizeShellSpecialCharacters(commitMessage)}"`)
-  execSync('git push')
+  push(`${header}${existingContent}${title}${issueBody}${content}`, commitMessage, filepath)
+
+  // execSync(`git config --global user.name "${process.env.COMMITTER_NAME}"`)
+  // execSync(`git config --global user.email "${process.env.COMMITTER_EMAIL}"`)
+  // execSync(`git add "${sanitizeShellSpecialCharacters(filepath)}"`)
+  // execSync(`git commit -m "${sanitizeShellSpecialCharacters(commitMessage)}"`)
+  // execSync('git push')
 
   if (process.env.NOTIFICATION_COMMENT) {
     // https://docs.github.com/en/actions/learn-github-actions/variables
@@ -196,6 +201,64 @@ function post(issueBody, content) {
   fs.writeFileSync(tmpFile, `${title}${fold}${issueBody}${content}${foldEnd}`)
   execSync(`gh issue comment --repo "${targetIssueRepo}" "${targetIssueNumber}" --body-file "${tmpFile}"`)
   fs.unlinkSync(tmpFile)
+}
+
+async function fileExists(path) {
+  const octokit         = new Octokit({ auth: process.env.GITHUB_TOKEN })
+  const targetFileRepo  = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
+  const [ owner, repo ] = targetFileRepo.split('/')
+
+  try {
+    const response = await octokit.repos.getContent({
+      owner,
+      repo,
+      path: path,
+    })
+
+    // A target file is found.
+    return true
+  }
+  catch (error) {
+    if (error.status === 404) {
+      // A target file is not found.
+      return false
+    } else {
+      // Something goes wrong.
+      console.error(error)
+      return false
+    }
+  }
+}
+
+// https://blog.dennisokeeffe.com/blog/2020-06-22-using-octokit-to-create-files
+async function push(content, commitMessage, filepath) {
+  const octokit         = new Octokit({ auth: process.env.GITHUB_TOKEN })
+  const targetFileRepo  = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
+  const [ owner, repo ] = targetFileRepo.split('/')
+
+  try {
+    await octokit.repos.createOrUpdateFileContents({
+      owner: owner,
+      repo: repo,
+      path: filepath,
+      message: commitMessage,
+      content: Base64.encode(content),
+      committer: {
+        name: process.env.COMMITTER_NAME,
+        email: process.env.COMMITTER_EMAIL,
+      },
+      author: {
+        name: process.env.COMMITTER_NAME,
+        email: process.env.COMMITTER_EMAIL,
+      },
+    })
+
+    return true
+  }
+  catch (error) {
+    console.error(error)
+    return false
+  }
 }
 
 function buildFileTitle() {
