@@ -112,12 +112,16 @@ function commit(issueBody, content) {
   const filepath = buildFilepath()
 
   let existingContent = ''
+  let sha = null
   let commitMessage = ''
-  if (fileExists(filepath)) {
+  let file = getFileFromRepo(filepath)
+  if (file) {
     if (!process.env.OVERWRITE_WHEN_MODIFIED) {
+      // TODO: Use the content of variable "file" instead of readFileSync
       existingContent = `${fs.readFileSync(filepath)}${newline}${process.env.EXTRA_TEXT_WHEN_MODIFIED}${newline}`
     }
 
+    sha = file.data.sha
     commitMessage = `Update ${path.basename(filepath)}`
   }
   else {
@@ -143,7 +147,7 @@ function commit(issueBody, content) {
 
   // fs.writeFileSync(filepath, `${header}${existingContent}${title}${issueBody}${content}`)
 
-  push(`${header}${existingContent}${title}${issueBody}${content}`, commitMessage, filepath)
+  push(`${header}${existingContent}${title}${issueBody}${content}`, commitMessage, filepath, sha)
 
   // execSync(`git config --global user.name "${process.env.COMMITTER_NAME}"`)
   // execSync(`git config --global user.email "${process.env.COMMITTER_EMAIL}"`)
@@ -203,7 +207,7 @@ function post(issueBody, content) {
   fs.unlinkSync(tmpFile)
 }
 
-async function fileExists(path) {
+async function getFileFromRepo(path) {
   const octokit         = new Octokit({ auth: process.env.GITHUB_TOKEN })
   const targetFileRepo  = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
   const [ owner, repo ] = targetFileRepo.split('/')
@@ -216,7 +220,7 @@ async function fileExists(path) {
     })
 
     // A target file is found.
-    return true
+    return response
   }
   catch (error) {
     if (error.status === 404) {
@@ -231,7 +235,7 @@ async function fileExists(path) {
 }
 
 // https://blog.dennisokeeffe.com/blog/2020-06-22-using-octokit-to-create-files
-async function push(content, commitMessage, filepath) {
+async function push(content, commitMessage, filepath, sha) {
   const octokit         = new Octokit({ auth: process.env.GITHUB_TOKEN })
   const targetFileRepo  = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
   const [ owner, repo ] = targetFileRepo.split('/')
@@ -242,6 +246,8 @@ async function push(content, commitMessage, filepath) {
     path: filepath,
     message: commitMessage,
     content: Base64.encode(content),
+    // https://docs.github.com/en/rest/repos/contents?apiVersion=2022-11-28#create-or-update-file-contents:~:text=Required%20if%20you%20are%20updating%20a%20file.%20The%20blob%20SHA%20of%20the%20file%20being%20replaced.
+    sha: sha,
     committer: {
       name: process.env.COMMITTER_NAME,
       email: process.env.COMMITTER_EMAIL,
