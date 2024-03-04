@@ -236,29 +236,21 @@ async function push(content, commitMessage, filepath) {
   const targetFileRepo  = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
   const [ owner, repo ] = targetFileRepo.split('/')
 
-  try {
-    await octokit.repos.createOrUpdateFileContents({
-      owner: owner,
-      repo: repo,
-      path: filepath,
-      message: commitMessage,
-      content: Base64.encode(content),
-      committer: {
-        name: process.env.COMMITTER_NAME,
-        email: process.env.COMMITTER_EMAIL,
-      },
-      author: {
-        name: process.env.COMMITTER_NAME,
-        email: process.env.COMMITTER_EMAIL,
-      },
-    })
-
-    return true
-  }
-  catch (error) {
-    console.error(error)
-    return false
-  }
+  await octokit.repos.createOrUpdateFileContents({
+    owner: owner,
+    repo: repo,
+    path: filepath,
+    message: commitMessage,
+    content: Base64.encode(content),
+    committer: {
+      name: process.env.COMMITTER_NAME,
+      email: process.env.COMMITTER_EMAIL,
+    },
+    author: {
+      name: process.env.COMMITTER_NAME,
+      email: process.env.COMMITTER_EMAIL,
+    },
+  })
 }
 
 function buildFileTitle() {
