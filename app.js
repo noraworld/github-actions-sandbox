@@ -115,6 +115,7 @@ function commit(issueBody, content) {
   let sha = null
   let commitMessage = ''
   let file = getFileFromRepo(filepath)
+  console.info(file)
   if (file) {
     if (!process.env.OVERWRITE_WHEN_MODIFIED) {
       // TODO: Use the content of variable "file" instead of readFileSync
