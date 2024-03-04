@@ -27,7 +27,7 @@ async function run() {
         withQuote = (process.env.WITH_QUOTE.includes('file')) ? true : false
         issueBody = buildIssueBody(withQuote)
         content = buildContent(comments, issueBody, withQuote)
-        commit(issueBody, content)
+        await commit(issueBody, content)
         break
       case 'issue':
         comments = await getComments()
@@ -106,7 +106,7 @@ function buildContent(comments, issueBody, withQuote) {
   return content
 }
 
-function commit(issueBody, content) {
+async function commit(issueBody, content) {
   // Node.js Stream doesn't work if a filename contains back quotes, even if they are sanitized correctly.
   // Even if it were to work properly, back quotes shouldn't be used for a filename.
   const filepath = buildFilepath()
