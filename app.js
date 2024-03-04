@@ -114,7 +114,7 @@ function commit(issueBody, content) {
   let existingContent = ''
   let sha = null
   let commitMessage = ''
-  let file = getFileFromRepo(filepath)
+  let file = await getFileFromRepo(filepath)
   console.info(file)
   if (file) {
     if (!process.env.OVERWRITE_WHEN_MODIFIED) {
@@ -148,7 +148,7 @@ function commit(issueBody, content) {
 
   // fs.writeFileSync(filepath, `${header}${existingContent}${title}${issueBody}${content}`)
 
-  push(`${header}${existingContent}${title}${issueBody}${content}`, commitMessage, filepath, sha)
+  await push(`${header}${existingContent}${title}${issueBody}${content}`, commitMessage, filepath, sha)
 
   // execSync(`git config --global user.name "${process.env.COMMITTER_NAME}"`)
   // execSync(`git config --global user.email "${process.env.COMMITTER_EMAIL}"`)
