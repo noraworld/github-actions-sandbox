@@ -115,10 +115,9 @@ async function commit(issueBody, content) {
   let sha = null
   let commitMessage = ''
   let file = await getFileFromRepo(filepath)
-  console.info(file)
   if (file) {
     if (!process.env.OVERWRITE_WHEN_MODIFIED) {
-      // TODO: Use the content of variable "file" instead of readFileSync
+      // FIXME: Use the content of variable "file" instead of readFileSync()
       existingContent = `${fs.readFileSync(filepath)}${newline}${process.env.EXTRA_TEXT_WHEN_MODIFIED}${newline}`
     }
 
@@ -139,22 +138,7 @@ async function commit(issueBody, content) {
     title = `# [${buildFileTitle()}](${process.env.ISSUE_URL})${newline}`
   }
 
-  // This might be unnecessary if you push a file with Octokit.
-  // https://blog.dennisokeeffe.com/blog/2020-06-22-using-octokit-to-create-files
-  // const dir = path.dirname(filepath)
-  // if (!fs.existsSync(dir)) {
-  //   fs.mkdirSync(dir, { recursive: true })
-  // }
-
-  // fs.writeFileSync(filepath, `${header}${existingContent}${title}${issueBody}${content}`)
-
   await push(`${header}${existingContent}${title}${issueBody}${content}`, commitMessage, filepath, sha)
-
-  // execSync(`git config --global user.name "${process.env.COMMITTER_NAME}"`)
-  // execSync(`git config --global user.email "${process.env.COMMITTER_EMAIL}"`)
-  // execSync(`git add "${sanitizeShellSpecialCharacters(filepath)}"`)
-  // execSync(`git commit -m "${sanitizeShellSpecialCharacters(commitMessage)}"`)
-  // execSync('git push')
 
   if (process.env.NOTIFICATION_COMMENT) {
     // https://docs.github.com/en/actions/learn-github-actions/variables
@@ -213,6 +197,7 @@ async function getFileFromRepo(path) {
   const targetFileRepo  = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
   const [ owner, repo ] = targetFileRepo.split('/')
 
+  // TODO: It might be better not to use try-catch.
   try {
     const response = await octokit.repos.getContent({
       owner,
