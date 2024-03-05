@@ -128,4 +128,4 @@ runs:
         WITH_TITLE: ${{ inputs.with_title }}
         CUSTOM_TITLE: ${{ inputs.custom_title }}
         WITH_QUOTE: ${{ inputs.with_quote }}
-        PERSONAL_ACCESS_TOKEN: ${{ personal_access_token }}
+        PERSONAL_ACCESS_TOKEN: ${{ inputs.personal_access_token }}
