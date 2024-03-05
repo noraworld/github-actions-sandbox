@@ -9,6 +9,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # "2024-03-05_sleep_睡眠記録" => "2024"
+      - name: Get a year
+        run: echo "YEAR=$(cut -d '-' -f1 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
+
+      # "2024-03-05_sleep_睡眠記録" => "03"
+      - name: Get a month
+        run: echo "MONTH=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
+
+      # "2024-03-05_sleep_睡眠記録" => "2024-03-05"
+      - name: Get a date
+        run: echo "DATE=$(cut -d '_' -f1 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
+
+      # "2024-03-05_sleep_睡眠記録" => "sleep"
+      - name: Get a category
+        run: echo "CATEGORY=$(cut -d '_' -f2 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
+
+      # "2024-03-05_sleep_睡眠記録" => "睡眠記録"
       - name: Get a title
         run: echo "TITLE=$(cut -d '_' -f3 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
 
@@ -18,6 +35,7 @@ jobs:
           mode: "file, issue"
           # filepath: _posts/${{ env.YEAR }}/${{ env.MONTH }}/${{ github.event.issue.title }}-.md
           # filepath: "issues/${{ github.event.issue.number }}_${{ github.event.issue.title }}.md"
+          filepath: ${{ env.CATEGORY }}/${{ env.YEAR }}/${{ env.MONTH }}/${{ env.DATE }}-.md
           committer_name: Kosuke Aoki
           committer_email: mail@noraworld.com
           overwrite_when_modified: true
