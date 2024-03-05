@@ -54,5 +54,6 @@ jobs:
           with_title: true
           custom_title: ${{ env.TITLE }}
           # with_quote: issue
+          personal_access_token: GH_TOKEN
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
