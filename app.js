@@ -222,7 +222,7 @@ async function getFileFromRepo(path) {
 
 // https://blog.dennisokeeffe.com/blog/2020-06-22-using-octokit-to-create-files
 async function push(content, commitMessage, filepath, sha) {
-  const octokit         = new Octokit({ auth: process.env.GITHUB_TOKEN })
+  const octokit         = new Octokit({ auth: process.env.GH_TOKEN })
   const targetFileRepo  = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
   const [ owner, repo ] = targetFileRepo.split('/')
 

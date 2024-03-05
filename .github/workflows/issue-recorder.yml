@@ -41,8 +41,8 @@ jobs:
           overwrite_when_modified: true
           extra_text_when_modified: "# issue からこんにちはです"
           notification_comment: このタスクの内容は [`<FILE_PATH>`](<FILE_URL>) に保存されました。
-          target_file_repo: noraworld/github-actions-sandbox
-          target_issue_repo: noraworld/github-actions-sandbox
+          target_file_repo: noraworld/diary
+          target_issue_repo: noraworld/diary
           target_issue_number: latest
           fold_threshold: 0
           fold_summary: ここをクリックすると展開できます
