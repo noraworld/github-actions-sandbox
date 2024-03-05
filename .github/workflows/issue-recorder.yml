@@ -11,23 +11,23 @@ jobs:
     steps:
       # "2024-03-05_sleep_睡眠記録" => "2024"
       - name: Get a year
-        run: echo "YEAR=$(cut -d '-' -f1 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
+        run: echo "YEAR=$(cut -d '-' -f1 <<< "${{ github.event.issue.title }}")" >> $GITHUB_ENV
 
       # "2024-03-05_sleep_睡眠記録" => "03"
       - name: Get a month
-        run: echo "MONTH=$(cut -d '-' -f2 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
+        run: echo "MONTH=$(cut -d '-' -f2 <<< "${{ github.event.issue.title }}")" >> $GITHUB_ENV
 
       # "2024-03-05_sleep_睡眠記録" => "2024-03-05"
       - name: Get a date
-        run: echo "DATE=$(cut -d '_' -f1 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
+        run: echo "DATE=$(cut -d '_' -f1 <<< "${{ github.event.issue.title }}")" >> $GITHUB_ENV
 
       # "2024-03-05_sleep_睡眠記録" => "sleep"
       - name: Get a category
-        run: echo "CATEGORY=$(cut -d '_' -f2 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
+        run: echo "CATEGORY=$(cut -d '_' -f2 <<< "${{ github.event.issue.title }}")" >> $GITHUB_ENV
 
       # "2024-03-05_sleep_睡眠記録" => "睡眠記録"
       - name: Get a title
-        run: echo "TITLE=$(cut -d '_' -f3 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
+        run: echo "TITLE=$(cut -d '_' -f3 <<< "${{ github.event.issue.title }}")" >> $GITHUB_ENV
 
       - name: This is a test for Issue Recorder
         uses: noraworld/github-actions-sandbox@main
