@@ -44,7 +44,7 @@ jobs:
           # target_file_repo: noraworld/diary
           # target_issue_repo: noraworld/diary
           # target_issue_number: latest
-          fold_threshold: infinity
+          fold_threshold: 0
           fold_summary: ここをクリックすると展開できます
           with_date: true
           timezone: Asia/Tokyo
