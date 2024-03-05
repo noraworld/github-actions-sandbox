@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       # "2024-03-05_sleep_睡眠記録" => "2024"
