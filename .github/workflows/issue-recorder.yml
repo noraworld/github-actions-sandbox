@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Get a title
+        run: echo "TITLE=$(cut -d '_' -f3 <<< ${{ github.event.issue.title }})" >> $GITHUB_ENV
+
       - name: This is a test for Issue Recorder
         uses: noraworld/github-actions-sandbox@main
         with:
@@ -20,15 +23,16 @@ jobs:
           overwrite_when_modified: true
           extra_text_when_modified: "# issue からこんにちはです"
           notification_comment: このタスクの内容は [`<FILE_PATH>`](<FILE_URL>) に保存されました。
+          # target_file_repo: noraworld/diary
           # target_issue_repo: noraworld/diary
           # target_issue_number: latest
-          fold_threshold: 100
+          fold_threshold: infinity
           fold_summary: ここをクリックすると展開できます
           with_date: true
           timezone: Asia/Tokyo
           time_format: h:mm a · MMM d, yyyy (ZZZZ)
-          # with_header: title
+          with_header: "# ${{ env.TITLE }}"
           with_title: true
-          with_quote: issue
+          # with_quote: issue
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
