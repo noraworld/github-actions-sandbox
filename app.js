@@ -232,7 +232,6 @@ async function push(content, commitMessage, filepath, sha) {
   const targetFileRepo = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
   const [ owner, repo ] = targetFileRepo.split('/')
 
-  console.info(filepath)
   await octokit.repos.createOrUpdateFileContents({
     owner: owner,
     repo: repo,
