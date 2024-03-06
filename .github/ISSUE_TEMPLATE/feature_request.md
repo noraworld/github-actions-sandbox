@@ -1,9 +1,9 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
+title: "[{{DATE}}]_morning_おはよう"
 labels: ''
-assignees: ''
+assignees: noraworld
 
 ---
 

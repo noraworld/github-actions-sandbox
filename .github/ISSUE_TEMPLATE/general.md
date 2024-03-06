@@ -1,7 +1,7 @@
 ---
 name: General
 about: これはカスタムテンプレートのサンプルです。
-title: ''
+title: "[{{DATE}}]_sleep_おやすみ"
 labels: bug
 assignees: noraworld
 
