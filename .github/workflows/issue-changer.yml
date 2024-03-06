@@ -1,0 +1,32 @@
+name: Issue Changer
+
+on:
+  schedule:
+    - cron: '0 22 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Change issues
+        run: |
+          for issue_template in .github/ISSUE_TEMPLATE/*; do
+            gh issue create                                               \
+              --title "$(ggrep "title: " "$issue_template"                |
+                         gsed -e 's/^title: //g'                          |
+                         gsed -e "s/[\"\']//g"                            |
+                         gsed -e "s/\[{{DATE}}\]/$(date '+%Y-%m-%d')/g")" \
+              --body "$(gsed -e '/^---$/,/^---$/d' "$issue_template")"    \
+              --assignee "$(ggrep "assignees: " "$issue_template"         |
+                            gsed -e 's/^assignees: //g'                   |
+                            gsed -e "s/[\"\']//g")"
+          done
+
+          # gh issue create --title "$(date '+%Y-%m-%d' --date '1 day')" --body "$TEMPLATE$TO_DO_TOMORROW$TO_DO_TODAY"
+          # gh issue list --search $(date '+%Y-%m-%d') | awk '{ print $1 }' | xargs -I {} gh issue close {}
+        shell: sh
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
