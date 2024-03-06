@@ -1,10 +1,10 @@
 ---
 name: General
 about: これはカスタムテンプレートのサンプルです。
-title: デフォルトタイトル
+title: ''
 labels: bug
 assignees: noraworld
 
 ---
 
-これはカスタムテンプレートです。
+
