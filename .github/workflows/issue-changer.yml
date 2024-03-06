@@ -17,7 +17,7 @@ jobs:
       - name: create issues from templates
         run: |
           for issue_template in .github/ISSUE_TEMPLATE/*; do
-            gh issue create                                               \
+            gh issue create                                              \
               --title "$(grep "title: " "$issue_template"                |
                          sed -e 's/^title: //g'                          |
                          sed -e "s/[\"\']//g"                            |
