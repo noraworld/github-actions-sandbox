@@ -18,14 +18,14 @@ jobs:
         run: |
           for issue_template in .github/ISSUE_TEMPLATE/*; do
             gh issue create                                               \
-              --title "$(ggrep "title: " "$issue_template"                |
-                         gsed -e 's/^title: //g'                          |
-                         gsed -e "s/[\"\']//g"                            |
-                         gsed -e "s/\[{{DATE}}\]/$(date '+%Y-%m-%d')/g")" \
-              --body "$(gsed -e '/^---$/,/^---$/d' "$issue_template")"    \
-              --assignee "$(ggrep "assignees: " "$issue_template"         |
-                            gsed -e 's/^assignees: //g'                   |
-                            gsed -e "s/[\"\']//g")"
+              --title "$(grep "title: " "$issue_template"                |
+                         sed -e 's/^title: //g'                          |
+                         sed -e "s/[\"\']//g"                            |
+                         sed -e "s/\[{{DATE}}\]/$(date '+%Y-%m-%d')/g")" \
+              --body "$(sed -e '/^---$/,/^---$/d' "$issue_template")"    \
+              --assignee "$(grep "assignees: " "$issue_template"         |
+                            sed -e 's/^assignees: //g'                   |
+                            sed -e "s/[\"\']//g")"
           done
 
           # gh issue create --title "$(date '+%Y-%m-%d' --date '1 day')" --body "$TEMPLATE$TO_DO_TOMORROW$TO_DO_TODAY"
