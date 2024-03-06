@@ -1,8 +1,11 @@
 name: Issue Changer
 
+# on:
+#   schedule:
+#     - cron: '0 22 * * *'
+
 on:
-  schedule:
-    - cron: '0 22 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,7 +14,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Change issues
+      - name: create issues from templates
         run: |
           for issue_template in .github/ISSUE_TEMPLATE/*; do
             gh issue create                                               \
