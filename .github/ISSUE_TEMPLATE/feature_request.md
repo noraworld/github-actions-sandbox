@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: "[{{DATE}}]_morning_おはよう"
+title: "[{{DATE}}]_walking_ウォーキング"
 labels: ''
 assignees: noraworld
 
