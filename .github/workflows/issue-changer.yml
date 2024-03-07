@@ -1,4 +1,4 @@
-name: Issue Changer
+name: Templates Creator
 
 # on:
 #   schedule:
@@ -14,7 +14,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: create issues from templates
+      - name: Create issues from templates
         run: |
           for issue_template in .github/ISSUE_TEMPLATE/*; do
             gh issue create                                              \
@@ -27,9 +27,6 @@ jobs:
                             sed -e 's/^assignees: //g'                   |
                             sed -e "s/[\"\']//g")"
           done
-
-          # gh issue create --title "$(date '+%Y-%m-%d' --date '1 day')" --body "$TEMPLATE$TO_DO_TOMORROW$TO_DO_TODAY"
-          # gh issue list --search $(date '+%Y-%m-%d') | awk '{ print $1 }' | xargs -I {} gh issue close {}
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
