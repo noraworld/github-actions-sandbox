@@ -1,4 +1,4 @@
-name: done
+name: Templates Closer
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: "done"
+      - name: Add done label to open issues
         run: |
           gh issue list | awk '{ print $1 }' | xargs -I {} sh -c 'sleep "$SLEEP_COUNT"; gh issue edit {} --add-label "done"'
         shell: sh
