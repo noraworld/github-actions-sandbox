@@ -1,21 +1,18 @@
-name: Stacker
+name: done
 
 on:
-  issues:
-    types:
-      - labeled
+  workflow_dispatch:
 
 jobs:
   build:
-    if: github.event.label.name == 'foo'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: "stacker test"
+      - name: "done"
         run: |
-          echo "${{ github.event.issue.html_url }}"
+          gh issue list | awk '{ print $1 }' | xargs -I {} gh issue edit {} --add-label 'done'
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
