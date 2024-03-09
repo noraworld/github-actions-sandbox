@@ -68,7 +68,9 @@ jobs:
             gh issue close "${{ github.event.issue.number }}"
           else
             gh issue edit "${{ github.event.issue.number }}" --remove-label 'done'
-            echo "Something went wrong." >&2
+            echo "File content length for noraworld/github-actions-sandbox/contents/${{ env.CATEGORY }}/${{ env.YEAR }}/${{ env.MONTH }}/${{ env.DATE }}-.md: $file_content_length" >&2
+            echo "Issue content length for ${{ github.event.issue.number }}: $issue_content_length" >&2
+            echo "File content length should be greater than or equal to issue content length" >&2
             exit 1
           fi
         shell: sh
