@@ -62,7 +62,7 @@ jobs:
       - name: Make sure the issue is saved successfully
         run: |
           file_content_length=$(gh api "repos/noraworld/github-actions-sandbox/contents/${{ env.CATEGORY }}/${{ env.YEAR }}/${{ env.MONTH }}/${{ env.DATE }}-.md" --jq '.content' | base64 --decode | wc -l)
-          issue_content_length$(gh issue view "$ISSUE_NUMBER" --json comments --jq '.comments.[].body' | wc -l)
+          issue_content_length=$(gh issue view "$ISSUE_NUMBER" --json comments --jq '.comments.[].body' | wc -l)
 
           if [ "$file_content_length" -gt "$issue_content_length" ]; then
             gh issue close "$ISSUE_NUMBER"
