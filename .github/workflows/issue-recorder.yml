@@ -68,6 +68,8 @@ jobs:
             gh issue close "${{ github.event.issue.number }}"
           else
             gh issue edit "${{ github.event.issue.number }}" --remove-label 'done'
+            echo "Something went wrong." >&2
+            exit 1
           fi
         shell: sh
         env:
