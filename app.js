@@ -124,7 +124,13 @@ async function commit(issueBody, content) {
     }
 
     sha = file.data.sha
+
+    // Using only basename causes the phenomenon that
+    // all the commits of the templated diaries saved to the diary repository
+    // are completely the same, which is odd.
+    //
     // commitMessage = `Update ${path.basename(filepath)}`
+    //
     commitMessage = `Update ${filepath}`
   }
   else {
