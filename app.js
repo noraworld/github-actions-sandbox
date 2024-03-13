@@ -124,10 +124,12 @@ async function commit(issueBody, content) {
     }
 
     sha = file.data.sha
-    commitMessage = `Update ${path.basename(filepath)}`
+    // commitMessage = `Update ${path.basename(filepath)}`
+    commitMessage = `Update ${filepath}`
   }
   else {
-    commitMessage = `Add ${path.basename(filepath)}`
+    // commitMessage = `Add ${path.basename(filepath)}`
+    commitMessage = `Add ${filepath}`
   }
 
   let header = ''
