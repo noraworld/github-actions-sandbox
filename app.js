@@ -148,7 +148,8 @@ async function commit(issueBody, content) {
     title = `# [${buildFileTitle()}](${process.env.ISSUE_URL})${newline}`
   }
 
-  await push(`${header}${existingContent}${title}${issueBody}${content}`, commitMessage, filepath, sha)
+  const commit = await push(`${header}${existingContent}${title}${issueBody}${content}`, commitMessage, filepath, sha)
+  console.info(commit)
 
   const targetFileRepo = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
   if (process.env.NOTIFICATION_COMMENT) {
@@ -242,7 +243,7 @@ async function push(content, commitMessage, filepath, sha) {
 
   for (let i = 1; i <= pushRetryMaximum; i++) {
     try {
-      await octokit.repos.createOrUpdateFileContents({
+      const response = await octokit.repos.createOrUpdateFileContents({
         owner: owner,
         repo: repo,
         path: filepath,
