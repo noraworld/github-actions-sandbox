@@ -41,7 +41,7 @@ jobs:
           committer_email: mail@noraworld.com
           overwrite_when_modified: true
           extra_text_when_modified: "# issue からこんにちはです"
-          notification_comment: このタスクの内容は [`<FILE_PATH>`](<FILE_URL>) ([sha](<FILE_URL_WITH_SHA>)) に保存されました。
+          notification_comment: このタスクの内容は [`<FILE_PATH>`](<FILE_URL_WITH_SHA>) (`[${{ env.GITHUB_REF_NAME }}`](<FILE_URL>)) に保存されました。
           # target_file_repo: noraworld/diary
           # target_issue_repo: noraworld/diary
           # target_issue_number: latest
