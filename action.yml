@@ -87,7 +87,7 @@ inputs:
     required: false
     default: ""
   skip_body:
-    description: Whether to skip the body in an issue
+    description: Whether to skip the body of an issue
     required: false
     default: ""
   personal_access_token:
