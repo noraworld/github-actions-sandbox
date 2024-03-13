@@ -232,7 +232,7 @@ async function push(content, commitMessage, filepath, sha) {
   const targetFileRepo = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
   const [ owner, repo ] = targetFileRepo.split('/')
 
-  for (let i = 0; i < pushRetryMaximum; i++) {
+  for (let i = 1; i <= pushRetryMaximum; i++) {
     try {
       await octokit.repos.createOrUpdateFileContents({
         owner: owner,
@@ -252,11 +252,17 @@ async function push(content, commitMessage, filepath, sha) {
         },
       })
 
-      console.info(`DEBUG: i = ${i}`)
       break // succeed
     }
     catch (error) {
       console.error(error)
+
+      if (i === pushRetryMaximum) {
+        console.error(`The attempt #${i} has failed. No more attempts will be made. Sorry, please try again.`)
+      }
+      else {
+        console.error(`The attempt #${i} has failed. Move on to the next attempt.`)
+      }
     }
   }
 }
