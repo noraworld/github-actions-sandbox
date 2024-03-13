@@ -148,8 +148,7 @@ async function commit(issueBody, content) {
     title = `# [${buildFileTitle()}](${process.env.ISSUE_URL})${newline}`
   }
 
-  const commit = await push(`${header}${existingContent}${title}${issueBody}${content}`, commitMessage, filepath, sha)
-  console.info(commit)
+  const commitResult = await push(`${header}${existingContent}${title}${issueBody}${content}`, commitMessage, filepath, sha)
 
   const targetFileRepo = process.env.TARGET_FILE_REPO ? process.env.TARGET_FILE_REPO : process.env.GITHUB_REPOSITORY
   if (process.env.NOTIFICATION_COMMENT) {
@@ -163,6 +162,10 @@ async function commit(issueBody, content) {
       .replaceAll(
         '<FILE_URL>',
         `${process.env.GITHUB_SERVER_URL}/${targetFileRepo}/blob/${process.env.GITHUB_REF_NAME}/${githubFlavoredPercentEncode(filepath)}`
+      )
+      .replaceAll(
+        '<FILE_URL_WITH_SHA>',
+        `${process.env.GITHUB_SERVER_URL}/${targetFileRepo}/blob/${commitResult.data.commit.sha}/${githubFlavoredPercentEncode(filepath)}`
       )
 
     fs.writeFileSync(tmpFile, notification_comment)
