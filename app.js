@@ -261,7 +261,7 @@ async function push(content, commitMessage, filepath, sha) {
         },
       })
 
-      break // succeed
+      return response // succeed
     }
     catch (error) {
       console.error(error)
