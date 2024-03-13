@@ -47,6 +47,7 @@ jobs:
           # target_issue_number: latest
           fold_threshold: 0
           fold_summary: ここをクリックすると展開できます
+          title_prefix: 🐯
           with_date: true
           timezone: Asia/Tokyo
           time_format: h:mm a · MMM d, yyyy (ZZZZ)
