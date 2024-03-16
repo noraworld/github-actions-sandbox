@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Store ✅ if the label "foo" exists, otherwise store ❌
         run: |
-          if [ "$(echo "${{ toJson(github.event.issue.labels.*.name) }}" | grep -c "foo")" ]; then
+          if [ "$(echo "${{ toJson(github.event.issue.labels.*.name) }}" | grep -c "foo")" -gt 0 ]; then
             echo "MARK=✅" >> $GITHUB_ENV
           else
             echo "MARK=❌" >> $GITHUB_ENV
