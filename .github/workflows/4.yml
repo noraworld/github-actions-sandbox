@@ -1,0 +1,13 @@
+name: 4
+
+on:
+  issues:
+    types:
+      - closed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output ✅ if the label "foo" exists, otherwise output ❌
+        run: echo "${{ github.event.issue.labels }}"
