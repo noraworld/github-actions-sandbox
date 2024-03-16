@@ -9,5 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Output ✅ if the label "foo" exists, otherwise output ❌
-        run: echo "${{ toJson(github.event.issue.labels.*.name) }}" | grep -c "foo"
+      - name: Store ✅ if the label "foo" exists, otherwise store ❌
+        run: |
+          if [ "$(echo "${{ toJson(github.event.issue.labels.*.name) }}" | grep -c "foo")" ]; then
+            echo "MARK=✅" >> $GITHUB_ENV
+          else
+            echo "MARK=❌" >> $GITHUB_ENV
+          fi
+
+      - name: Output the mark
+        run: echo "${{ env.MARK }}"
