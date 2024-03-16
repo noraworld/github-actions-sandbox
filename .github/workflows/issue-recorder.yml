@@ -43,11 +43,12 @@ jobs:
           extra_text_when_modified: "# issue からこんにちはです"
           notification_comment: このタスクの内容は [`<FILE_PATH>`](<FILE_URL_WITH_SHA>) ([<REF_NAME>](<FILE_URL>)) に保存されました。
           # target_file_repo: noraworld/diary
+          title_prefix_for_file: 😠
           # target_issue_repo: noraworld/diary
           # target_issue_number: latest
           fold_threshold: 0
           fold_summary: ここをクリックすると展開できます
-          title_prefix: 🐯
+          title_prefix_for_issue: 🐯
           with_date: true
           timezone: Asia/Tokyo
           time_format: h:mm a · MMM d, yyyy (ZZZZ)
