@@ -33,7 +33,7 @@ jobs:
       - name: This is a test for Issue Recorder
         uses: noraworld/github-actions-sandbox@main
         with:
-          mode: "file, issue"
+          mode: "file"
           # filepath: _posts/${{ env.YEAR }}/${{ env.MONTH }}/${{ github.event.issue.title }}-.md
           # filepath: "issues/${{ github.event.issue.number }}_${{ github.event.issue.title }}.md"
           filepath: ${{ env.CATEGORY }}/${{ env.YEAR }}/${{ env.MONTH }}/${{ env.DATE }}-.md
