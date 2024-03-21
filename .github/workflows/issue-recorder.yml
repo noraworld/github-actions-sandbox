@@ -52,7 +52,7 @@ jobs:
           with_date: true
           timezone: Asia/Tokyo
           time_format: h:mm a · MMM d, yyyy (ZZZZ)
-          with_header: ""
+          with_header: "---\r\nid: ${{ github.event.issue.id }}\r\ntitle: ${{ github.event.issue.title }}\r\nassignees: ${{ toJson(github.event.issue.assignees.*.name) }}\r\nlabels: ${{ toJson(github.event.issue.labels.*.name) }}\r\ncreated_at: ${{ github.event.issue.created_at }}\r\n---"
           with_title: true
           custom_title: ${{ env.TITLE }}
           # with_quote: issue
