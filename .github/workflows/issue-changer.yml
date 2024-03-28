@@ -25,6 +25,7 @@ jobs:
                     sed -e "s/\[{{DATE}}\]/$(date '+%Y-%m-%d')/g")
 
             if [ "$(echo "$ISSUE_TITLE_LIST" | grep -c "$title")" -ne 0 ]; then
+              echo "$title already exists!" >&2
               continue
             fi
 
