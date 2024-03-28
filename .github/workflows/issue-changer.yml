@@ -16,7 +16,7 @@ jobs:
 
       - name: Create issues from templates
         run: |
-          ISSUE_TITLE_LIST=$(gh issue list --repo "noraworld/to-do" --json title --jq .[].title)
+          ISSUE_TITLE_LIST=$(gh issue list --json title --jq .[].title)
 
           for issue_template in .github/ISSUE_TEMPLATE/*; do
             title=$(grep "title: " "$issue_template"               |
