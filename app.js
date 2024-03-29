@@ -152,11 +152,11 @@ async function commit(issueBody, content) {
         `"${buildFileTitle()}"`
       )
       .replaceAll(
-        'ASSIGNEES',
+        '<ASSIGNEES>',
         process.env.ISSUE_ASSIGNEES
       )
       .replaceAll(
-        'LABELS',
+        '<LABELS>',
         process.env.ISSUE_LABELS
       )
       .replaceAll(
