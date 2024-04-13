@@ -21,4 +21,4 @@ jobs:
         run: echo "${{ env.MARK }}"
 
       - name: tac
-        run: echo "hello\nworld\nsee\nyou" | tac
+        run: gh issue list --repo noraworld/to-do --label tomorrow --json title,url --template '{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}{{"\r\n"}}' | tac
