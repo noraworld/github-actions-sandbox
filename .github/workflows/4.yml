@@ -22,3 +22,5 @@ jobs:
 
       - name: tac
         run: gh issue list --repo noraworld/to-do --label tomorrow --json title,url --template '{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}{{"\r\n"}}' | tac
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
