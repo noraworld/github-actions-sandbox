@@ -19,3 +19,6 @@ jobs:
 
       - name: Output the mark
         run: echo "${{ env.MARK }}"
+
+      - name: tac
+        run: echo "hello\nworld\nsee\nyou" | tac
