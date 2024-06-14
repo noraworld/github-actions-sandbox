@@ -22,6 +22,11 @@ jobs:
 
       - name: Create issues from templates
         run: |
+          if [ "$(gh issue list | wc -l)" -ne 0 ]; then
+            echo "Some of or all of the templates have not been closed yet." >&2
+            exit 1
+          fi
+
           ISSUE_TITLE_LIST=$(gh issue list --json title --jq .[].title)
 
           for issue_template in .github/ISSUE_TEMPLATE/*; do
