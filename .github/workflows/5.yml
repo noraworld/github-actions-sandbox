@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  call-workflow:
+  call-workflow1:
     uses: noraworld/github-actions-sandbox/.github/workflows/schedules.yml@main
 
-  call-workflow:
+  call-workflow2:
     uses: noraworld/github-actions-sandbox/.github/workflows/issue-changer.yml@main
 
   # call-workflow-passing-data:
