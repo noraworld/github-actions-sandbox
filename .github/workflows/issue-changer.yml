@@ -6,8 +6,6 @@ name: Templates Creator
 
 on:
   workflow_dispatch:
-
-on:
   workflow_call:
     secrets:
       token:
