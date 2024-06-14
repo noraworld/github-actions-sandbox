@@ -9,8 +9,26 @@ jobs:
     secrets:
       token: ${{ secrets.GH_TOKEN }}
 
-  call-workflow2:
+  poll-workflow-alpha:
     needs: call-workflow1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: check if all the issue are closed successfully
+        run: |
+          while [ "$(gh issue list | wc -l)" -ne 0 ]; do
+            # echo "Some of or all of the templates have not been closed yet." >&2
+            # exit 1
+            sleep 15
+          done
+        shell: sh
+        env:
+          GH_TOKEN: ${{ secrets.token }}
+
+  call-workflow2:
+    needs: poll-workflow-alpha
     uses: noraworld/github-actions-sandbox/.github/workflows/issue-changer.yml@main
     secrets:
       token: ${{ secrets.GH_TOKEN }}
