@@ -4,8 +4,11 @@ name: Templates Creator
 #   schedule:
 #     - cron: '0 22 * * *'
 
+# on:
+#   workflow_dispatch:
+
 on:
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   build:

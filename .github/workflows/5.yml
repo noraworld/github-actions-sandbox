@@ -1,0 +1,21 @@
+name: Call a reusable workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-workflow:
+    uses: noraworld/github-actions-sandbox/.github/workflows/schedules.yml@main
+
+  call-workflow:
+    uses: noraworld/github-actions-sandbox/.github/workflows/issue-changer.yml@main
+
+  # call-workflow-passing-data:
+  #   permissions:
+  #     contents: read
+  #     pull-requests: write
+  #   uses: octo-org/example-repo/.github/workflows/workflow-B.yml@main
+  #   with:
+  #     config-path: .github/labeler.yml
+  #   secrets:
+  #     token: ${{ secrets.GITHUB_TOKEN }}
