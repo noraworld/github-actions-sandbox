@@ -10,6 +10,7 @@ jobs:
       token: ${{ secrets.GH_TOKEN }}
 
   call-workflow2:
+    needs: call-workflow1
     uses: noraworld/github-actions-sandbox/.github/workflows/issue-changer.yml@main
     secrets:
       token: ${{ secrets.GH_TOKEN }}
