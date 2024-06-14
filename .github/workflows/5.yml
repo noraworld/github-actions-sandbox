@@ -25,7 +25,7 @@ jobs:
           done
         shell: sh
         env:
-          GH_TOKEN: ${{ secrets.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
   call-workflow2:
     needs: poll-workflow-alpha
