@@ -53,4 +53,4 @@ jobs:
           done
         shell: sh
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.token }}
