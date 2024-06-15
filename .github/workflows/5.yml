@@ -6,10 +6,10 @@ on:
 jobs:
   call-workflow1:
     uses: noraworld/github-actions-sandbox/.github/workflows/schedules.yml@main
-    # secrets:
-    #   token: ${{ secrets.GH_TOKEN }}
-    env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    secrets:
+      token: ${{ secrets.GH_TOKEN }}
+    # env:
+    #   GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
   poll-workflow-alpha:
     needs: call-workflow1
@@ -32,10 +32,10 @@ jobs:
   call-workflow2:
     needs: poll-workflow-alpha
     uses: noraworld/github-actions-sandbox/.github/workflows/issue-changer.yml@main
-    # secrets:
-    #   token: ${{ secrets.GH_TOKEN }}
-    env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    secrets:
+      token: ${{ secrets.GH_TOKEN }}
+    # env:
+    #   GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
   # call-workflow-passing-data:
   #   permissions:
