@@ -25,4 +25,4 @@ jobs:
           #  sed -n '/^[Ll]ink:/ s/.*"next".*page=\([0-9]*\).*"last".*/\1/p'
         shell: sh
         env:
-          GH_TOKEN: ${{ secrets.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
