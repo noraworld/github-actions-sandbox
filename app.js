@@ -21,11 +21,7 @@ async function run() {
   while (true) {
     comments = await getComments()
     if (comments.length === 0) break
-    console.log('==============comments===============')
-    for (let comment of comments) {
-      console.log(comment)
-    }
-    console.log('=====================================')
+    // await is important because it's performed before the number of comments is checked above.
     await transferComments(comments)
 
     attempt++
