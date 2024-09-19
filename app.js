@@ -26,7 +26,7 @@ async function run() {
       console.log(comment)
     }
     console.log('=====================================')
-    transferComments(comments)
+    await transferComments(comments)
 
     attempt++
     if (attempt > spiltCommentsCheckAttemptsMaximum) {
