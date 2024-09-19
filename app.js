@@ -21,7 +21,8 @@ async function run() {
   while (true) {
     comments = await getComments()
     if (comments.length === 0) break
-    transferComments(comments)
+    console.log(`comments = ${comments}`)
+    await transferComments(comments)
 
     attempt++
     if (attempt > spiltCommentsCheckAttemptsMaximum) {
