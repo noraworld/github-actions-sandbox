@@ -98,6 +98,14 @@ inputs:
     description: Specify your personal access token name stored in your repository
     required: false
     default: ""
+  replace_twitter_short_url:
+    description: TBA
+    required: false
+    default: ""
+  trim_empty_image_tag:
+    description: TBA
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -146,3 +154,5 @@ runs:
         # WITH_QUOTE: ${{ inputs.with_quote }}
         # SKIP_BODY: ${{ inputs.skip_body }}
         PERSONAL_ACCESS_TOKEN: ${{ inputs.personal_access_token }}
+        REPLACE_TWITTER_SHORT_URL:
+        TRIM_EMPTY_IMAGE_TAG:

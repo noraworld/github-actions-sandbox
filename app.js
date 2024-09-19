@@ -3,19 +3,31 @@
 const { Octokit } = require('@octokit/rest')
 const fs = require('fs')
 const { execSync } = require('child_process')
+// const axios = require('axios')
 // const path = require('path')
 // const { DateTime } = require('luxon')
 // const { Base64 } = require('js-base64')
-const { exit } = require('process')
+// const { exit } = require('process')
 // When "\n" is used, GitHub will warn you of the following:
 // We’ve detected the file has mixed line endings. When you commit changes we will normalize them to Windows-style (CRLF).
 // const newline = '\r\n'
 const tmpFile = 'tmp.md'
-// const pushRetryMaximum = 5
+const spiltCommentsCheckAttemptsMaximum = 5
 
 async function run() {
-  let comments = await getComments()
-  transferComments(comments)
+  let comments = null
+  let attempt = 0
+
+  do {
+    comments = await getComments()
+    transferComments(comments)
+
+    attempt++
+    if (attempt > spiltCommentsCheckAttemptsMaximum) {
+      console.error(`The action was run ${attempt} times, but the comments still exist.`)
+      process.exit(1)
+    }
+  } while (comments.length !== 0)
 }
 
 async function getComments() {
@@ -58,15 +70,19 @@ async function transferComments(comments) {
     targetIssueNumber = execSync(`gh issue list --repo "${targetIssueRepo}" --limit 1 | awk '{ print $1 }'`).toString().trim()
   }
 
+  let commentBody = null
   for (let comment of comments) {
     try {
-      fs.writeFileSync(tmpFile, comment.body)
+      commentBody = comment.body
+      buildCommentBody(commentBody)
+
+      fs.writeFileSync(tmpFile, commentBody)
       execSync(`gh issue comment --repo "${targetIssueRepo}" "${targetIssueNumber}" --body-file "${tmpFile}"`)
       await deleteComment(comment.id)
     }
     catch (error) {
       console.error(error)
-      exit(1)
+      process.exit(1)
     }
   }
 
@@ -85,6 +101,24 @@ async function deleteComment(commentID) {
     repo,
     comment_id: commentID,
   })
+}
+
+function buildCommentBody(commentBody) {
+  commentBody = process.env.REPLACE_TWITTER_SHORT_URL ? replaceTwitterShortURL(commentBody) : commentBody
+  commentBody = process.env.TRIM_EMPTY_IMAGE_TAG      ?      trimEmptyImageTag(commentBody) : commentBody
+
+  return commentBody
+}
+
+function replaceTwitterShortURL(commentBody) {
+  return commentBody.replaceAll(/https\:\/\/t\.co\/[a-zA-Z0-9]*/g, match => {
+    // HTTP modules like axios are hard to use because await can't be used here.
+    return execSync(`curl -Ls -o /dev/null -w "%{url_effective}\n" "${match}"`)
+  })
+}
+
+function trimEmptyImageTag(commentBody) {
+  return commentBody.replaceAll(/\!\[\]\(\)(\n\n)?/g, '')
 }
 
 run().catch((error) => {
