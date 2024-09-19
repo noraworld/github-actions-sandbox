@@ -154,5 +154,5 @@ runs:
         # WITH_QUOTE: ${{ inputs.with_quote }}
         # SKIP_BODY: ${{ inputs.skip_body }}
         PERSONAL_ACCESS_TOKEN: ${{ inputs.personal_access_token }}
-        REPLACE_TWITTER_SHORT_URL:
-        TRIM_EMPTY_IMAGE_TAG:
+        REPLACE_TWITTER_SHORT_URL: ${{ inputs.replace_twitter_short_url }}
+        TRIM_EMPTY_IMAGE_TAG: ${{ inputs.trim_empty_image_tag }}
