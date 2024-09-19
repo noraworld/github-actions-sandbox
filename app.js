@@ -18,8 +18,9 @@ async function run() {
   let comments = null
   let attempt = 0
 
-  do {
+  while (true) {
     comments = await getComments()
+    if (comments.length === 0) break
     transferComments(comments)
 
     attempt++
@@ -27,7 +28,7 @@ async function run() {
       console.error(`The action was run ${attempt} times, but the comments still exist.`)
       process.exit(1)
     }
-  } while (comments.length !== 0)
+  }
 }
 
 async function getComments() {
@@ -74,7 +75,7 @@ async function transferComments(comments) {
   for (let comment of comments) {
     try {
       commentBody = comment.body
-      buildCommentBody(commentBody)
+      commentBody = buildCommentBody(commentBody)
 
       fs.writeFileSync(tmpFile, commentBody)
       execSync(`gh issue comment --repo "${targetIssueRepo}" "${targetIssueNumber}" --body-file "${tmpFile}"`)
