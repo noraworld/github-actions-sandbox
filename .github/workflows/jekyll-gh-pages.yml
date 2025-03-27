@@ -20,6 +20,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: debug
+        run: echo \"${{ github.action_path }}\"
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
