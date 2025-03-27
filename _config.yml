@@ -11,8 +11,6 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-commonmark
-google_analytics: "G-7VS1W4MH23"
-google_adsense: "ca-pub-6761843998035165"
 
 exclude:
   - .sass-cache/
