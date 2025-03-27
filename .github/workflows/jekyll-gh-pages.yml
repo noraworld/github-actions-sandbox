@@ -31,9 +31,6 @@ jobs:
           bundler-cache: true
           rubygems: latest
 
-      # - name: Install dependencies
-      #   run: bundle install
-
       - name: Build Jekyll site
         run: bundle exec jekyll build
 
