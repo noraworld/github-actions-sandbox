@@ -28,7 +28,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check out workflow repo
+      - if: ${{ !(inputs.use_ruby_version == "true" && inputs.use_gemfile == "true") }}
+        name: Check out workflow repo
         uses: actions/checkout@v4
         with:
           repository: noraworld/github-actions-sandbox
