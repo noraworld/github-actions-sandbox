@@ -40,6 +40,7 @@ jobs:
 
       - name: Build Jekyll site
         run: bundle exec jekyll build
+        working-directory: tmp
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
