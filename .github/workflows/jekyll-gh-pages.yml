@@ -27,25 +27,30 @@ jobs:
           ref: main
           path: tmp
 
+      - name: Set env
+        run: |
+          echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
+          echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.8
+          ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
           rubygems: latest
-          working-directory: tmp
+          # working-directory: tmp
 
       - name: Build Jekyll site
         run: bundle exec jekyll build
-        working-directory: tmp
+        # working-directory: tmp
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        with:
-          path: tmp/_site/
+        # with:
+        #   path: tmp/_site/
 
   deploy:
     needs: build
