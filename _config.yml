@@ -1,0 +1,31 @@
+title: Github Actions Sandbox
+url: "https://noraworld.github.io"
+baseurl: "/github-actions-sandbox/"
+
+theme: minima
+markdown: CommonMark
+commonmark:
+  options: ["UNSAFE", "SMART", "FOOTNOTES"]
+  extensions: ["strikethrough", "autolink", "table", "tagfilter"]
+plugins:
+  - jekyll-feed
+  - jemoji
+  - jekyll-commonmark
+google_analytics: "G-7VS1W4MH23"
+google_adsense: "ca-pub-6761843998035165"
+
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/
+  - .gitignore
+  - README.md
+  - package.json
+  - package-lock.json
+  - .ruby-version
+  - .rubocop.yml
+  - CNAME
