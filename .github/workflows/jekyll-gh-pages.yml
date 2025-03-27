@@ -2,7 +2,6 @@ name: Build and Deploy Jekyll with GitHub Actions
 
 on:
   workflow_call:
-  workflow_dispatch:
 
 permissions:
   contents: read
