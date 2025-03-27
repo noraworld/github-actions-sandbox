@@ -1,9 +1,7 @@
 name: Build and Deploy Jekyll with GitHub Actions
 
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
   workflow_dispatch:
 
 permissions:
