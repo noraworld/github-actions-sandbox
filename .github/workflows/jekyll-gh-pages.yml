@@ -30,6 +30,7 @@ jobs:
         with:
           ruby-version: 2.7.8
           bundler-cache: true
+          rubygems: latest
 
       # - name: Install dependencies
       #   run: bundle install
