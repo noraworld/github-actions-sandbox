@@ -20,8 +20,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: debug
-        run: echo \"${{ github.action_path }}\"
+      - name: Check out workflow repo
+        uses: actions/checkout@v4
+        with:
+          repository: noraworld/github-actions-sandbox
+          ref: main
+          path: tmp
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -32,6 +36,7 @@ jobs:
           ruby-version: 2.7.8
           bundler-cache: true
           rubygems: latest
+          working-directory: tmp
 
       - name: Build Jekyll site
         run: bundle exec jekyll build
