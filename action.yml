@@ -12,14 +12,25 @@ inputs:
     default: false
     # type: string
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+# doesn't work in action.yml
+#   writing "id-token: write" was required even though it was written here
+#
+#    https://github.com/noraworld/github-actions-sandbox/actions/runs/14128783552/job/39583836654
+#
+# permissions:
+#   contents: read
+#   pages: write
+#   id-token: write
 
-concurrency:
-  group: pages
-  cancel-in-progress: false
+# doesn't work in action.yml
+#   these two workflows were run simultaneously even though concurrency was set here
+#
+#   https://github.com/noraworld/github-actions-sandbox/actions/runs/14129395698
+#   https://github.com/noraworld/github-actions-sandbox/actions/runs/14129397218
+#
+# concurrency:
+#   group: pages
+#   cancel-in-progress: false
 
 runs:
   using: "composite"
