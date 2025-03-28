@@ -4,12 +4,12 @@ name: Build and Deploy Jekyll with GitHub Actions
 #   workflow_call:
 inputs:
   use_ruby_version:
-    description: is it needed...?
+    # description: is it needed...?
     required: false
     default: false
     # type: string
   use_gemfile:
-    description: is it needed...?
+    # description: is it needed...?
     required: false
     default: false
     # type: string
