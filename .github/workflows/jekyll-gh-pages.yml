@@ -27,6 +27,9 @@ jobs:
     steps:
       - name: action
         uses: noraworld/github-actions-sandbox@main
+        with:
+          use_ruby_version: ${{ inputs.use_ruby_version }}
+          use_gemfile: ${{ inputs.use_gemfile }}
 
   deploy:
     needs: build
