@@ -44,8 +44,8 @@ runs:
       run: echo "${{ inputs.use_ruby_version }}"
       shell: sh
 
-    # - if: ${{ !(inputs.use_ruby_version == 'true' && inputs.use_gemfile == 'true') }}
-    - name: Check out workflow repo
+    - if: ${{ !(inputs.use_ruby_version == 'true' && inputs.use_gemfile == 'true') }}
+      name: Check out workflow repo
       uses: actions/checkout@v4
       with:
         repository: noraworld/github-actions-sandbox
@@ -54,21 +54,22 @@ runs:
 
     - name: Set env
       run: |
-        echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
-        echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
-      shell: sh
+        if [ "${{ inputs.use_ruby_version }}" = "true" ]; then
+          echo "RUBY_VERSION=$(cat .ruby-version)" >> $GITHUB_ENV
+        else
+          echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
+        fi
 
-      # if [ "${{ inputs.use_ruby_version }}" = "true" ]; then
-      #   echo "RUBY_VERSION=$(cat .ruby-version)" >> $GITHUB_ENV
-      # else
+        if [ "${{ inputs.use_gemfile }}" = "true" ]; then
+          echo "BUNDLE_GEMFILE=$(realpath Gemfile)" >> $GITHUB_ENV
+        else
+          echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
+        fi
+
+      # run: |
       #   echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
-      # fi
-
-      # if [ "${{ inputs.use_gemfile }}" = "true" ]; then
-      #   echo "BUNDLE_GEMFILE=$(realpath Gemfile)" >> $GITHUB_ENV
-      # else
       #   echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
-      # fi
+      # shell: sh
 
     - name: Setup Pages
       uses: actions/configure-pages@v5
@@ -76,8 +77,8 @@ runs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        # ruby-version: ${{ env.RUBY_VERSION }}
-        ruby-version: 2.7.8
+        ruby-version: ${{ env.RUBY_VERSION }}
+        # ruby-version: 2.7.8
         bundler-cache: true
         rubygems: latest
 
