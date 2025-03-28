@@ -1,0 +1,78 @@
+name: Build and Deploy Jekyll with GitHub Actions
+
+on:
+  workflow_call:
+    inputs:
+      use_ruby_version:
+        required: false
+        default: false
+        type: string
+      use_gemfile:
+        required: false
+        default: false
+        type: string
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - if: ${{ !(inputs.use_ruby_version == 'true' && inputs.use_gemfile == 'true') }}
+        name: Check out workflow repo
+        uses: actions/checkout@v4
+        with:
+          repository: noraworld/github-actions-sandbox
+          ref: main
+          path: tmp
+
+      - name: Set env
+        run: |
+          if [ "${{ inputs.use_ruby_version }}" = "true" ]; then
+            echo "RUBY_VERSION=$(cat .ruby-version)" >> $GITHUB_ENV
+          else
+            echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
+          fi
+
+          if [ "${{ inputs.use_gemfile }}" = "true" ]; then
+            echo "BUNDLE_GEMFILE=$(realpath Gemfile)" >> $GITHUB_ENV
+          else
+            echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+          rubygems: latest
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
