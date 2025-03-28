@@ -65,6 +65,7 @@ runs:
         else
           echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
         fi
+      shell: sh
 
       # run: |
       #   echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
