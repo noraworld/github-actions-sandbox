@@ -39,6 +39,7 @@ runs:
       run: |
         echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
         echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
+      shell: sh
 
       # if [ "${{ inputs.use_ruby_version }}" = "true" ]; then
       #   echo "RUBY_VERSION=$(cat .ruby-version)" >> $GITHUB_ENV
@@ -65,6 +66,7 @@ runs:
 
     - name: Build Jekyll site
       run: bundle exec jekyll build
+      shell: sh
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
