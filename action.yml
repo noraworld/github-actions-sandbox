@@ -1,38 +1,12 @@
 name: Build and Deploy Jekyll with GitHub Actions
 
-# on:
-#   workflow_call:
 inputs:
   use_ruby_version:
-    # description: is it needed...?
     required: false
     default: false
-    # type: string
   use_gemfile:
-    # description: is it needed...?
     required: false
     default: false
-    # type: string
-
-# doesn't work in action.yml
-#   writing "id-token: write" was required even though it was written here
-#
-#    https://github.com/noraworld/github-actions-sandbox/actions/runs/14128783552/job/39583836654
-#
-# permissions:
-#   contents: read
-#   pages: write
-#   id-token: write
-
-# doesn't work in action.yml
-#   these two workflows were run simultaneously even though concurrency was set here
-#
-#   https://github.com/noraworld/github-actions-sandbox/actions/runs/14129395698
-#   https://github.com/noraworld/github-actions-sandbox/actions/runs/14129397218
-#
-# concurrency:
-#   group: pages
-#   cancel-in-progress: false
 
 runs:
   using: "composite"
@@ -72,15 +46,6 @@ runs:
         fi
       shell: sh
 
-    # - name: debug
-    #   run: echo "${{ env.RUBY_VERSION }}"
-    #   shell: sh
-
-      # run: |
-      #   echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
-      #   echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
-      # shell: sh
-
     - name: Setup Pages
       uses: actions/configure-pages@v5
 
@@ -97,19 +62,3 @@ runs:
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
-
-  # unable to deploy via action.yml
-  #   it rails: Unexpected value 'environment'
-  #
-  #   https://github.com/noraworld/github-actions-sandbox/actions/runs/14129549740/job/39586216326
-  #
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v4
