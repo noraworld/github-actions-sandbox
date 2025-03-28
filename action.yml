@@ -10,7 +10,7 @@ inputs:
   use_gemfile:
     required: false
     default: false
-    # type: string
+    type: string
 
 permissions:
   contents: read
