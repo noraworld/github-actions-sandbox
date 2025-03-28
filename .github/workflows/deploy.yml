@@ -9,6 +9,6 @@ on:
 jobs:
   build_and_deploy:
     uses: noraworld/github-actions-sandbox/.github/workflows/jekyll-gh-pages.yml@main
-    with:
-      use_ruby_version: true
-      use_gemfile: true
+    # with:
+    #   use_ruby_version: true
+    #   use_gemfile: true
