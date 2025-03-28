@@ -8,4 +8,4 @@ on:
 
 jobs:
   jekyll-gh-pages:
-    uses: noraworld/github-actions-sandbox/.github/workflows/jekyll-gh-pages.yml@main
+    uses: noraworld/github-actions-sandbox@main
