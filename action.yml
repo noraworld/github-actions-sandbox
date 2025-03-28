@@ -22,53 +22,52 @@ concurrency:
   cancel-in-progress: false
 
 runs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      # - if: ${{ !(inputs.use_ruby_version == 'true' && inputs.use_gemfile == 'true') }}
-      - name: Check out workflow repo
-        uses: actions/checkout@v4
-        with:
-          repository: noraworld/github-actions-sandbox
-          ref: main
-          path: tmp
+    # - if: ${{ !(inputs.use_ruby_version == 'true' && inputs.use_gemfile == 'true') }}
+    - name: Check out workflow repo
+      uses: actions/checkout@v4
+      with:
+        repository: noraworld/github-actions-sandbox
+        ref: main
+        path: tmp
 
-      - name: Set env
-        run: |
-          echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
-          echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
+    - name: Set env
+      run: |
+        echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
+        echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
 
-        # if [ "${{ inputs.use_ruby_version }}" = "true" ]; then
-        #   echo "RUBY_VERSION=$(cat .ruby-version)" >> $GITHUB_ENV
-        # else
-        #   echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
-        # fi
+      # if [ "${{ inputs.use_ruby_version }}" = "true" ]; then
+      #   echo "RUBY_VERSION=$(cat .ruby-version)" >> $GITHUB_ENV
+      # else
+      #   echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
+      # fi
 
-        # if [ "${{ inputs.use_gemfile }}" = "true" ]; then
-        #   echo "BUNDLE_GEMFILE=$(realpath Gemfile)" >> $GITHUB_ENV
-        # else
-        #   echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
-        # fi
+      # if [ "${{ inputs.use_gemfile }}" = "true" ]; then
+      #   echo "BUNDLE_GEMFILE=$(realpath Gemfile)" >> $GITHUB_ENV
+      # else
+      #   echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
+      # fi
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          # ruby-version: ${{ env.RUBY_VERSION }}
-          ruby-version: 2.7.8
-          bundler-cache: true
-          rubygems: latest
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        # ruby-version: ${{ env.RUBY_VERSION }}
+        ruby-version: 2.7.8
+        bundler-cache: true
+        rubygems: latest
 
-      - name: Build Jekyll site
-        run: bundle exec jekyll build
+    - name: Build Jekyll site
+      run: bundle exec jekyll build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
 
   # deploy:
   #   needs: build
