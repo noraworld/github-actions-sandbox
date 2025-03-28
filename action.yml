@@ -40,10 +40,6 @@ runs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: debug
-      run: echo "${{ inputs.use_ruby_version }}"
-      shell: sh
-
     - if: ${{ !(inputs.use_ruby_version == 'true' && inputs.use_gemfile == 'true') }}
       name: Check out workflow repo
       uses: actions/checkout@v4
@@ -67,6 +63,10 @@ runs:
         fi
       shell: sh
 
+    - name: debug
+      run: echo "${{ env.RUBY_VERSION }}"
+      shell: sh
+
       # run: |
       #   echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
       #   echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
@@ -79,7 +79,6 @@ runs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ env.RUBY_VERSION }}
-        # ruby-version: 2.7.8
         bundler-cache: true
         rubygems: latest
 
