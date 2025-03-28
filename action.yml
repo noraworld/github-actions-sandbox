@@ -1,16 +1,16 @@
 name: Build and Deploy Jekyll with GitHub Actions
 
-on:
-  workflow_call:
-    inputs:
-      use_ruby_version:
-        required: false
-        default: false
-        type: string
-      use_gemfile:
-        required: false
-        default: false
-        type: string
+# on:
+#   workflow_call:
+inputs:
+  use_ruby_version:
+    required: false
+    default: false
+    type: string
+  use_gemfile:
+    required: false
+    default: false
+    type: string
 
 permissions:
   contents: read
