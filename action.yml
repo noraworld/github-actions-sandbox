@@ -34,9 +34,6 @@ inputs:
 
 runs:
   using: "composite"
-  environment:
-    name: github-pages
-    url: ${{ steps.deployment.outputs.page_url }}
   steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -89,6 +86,11 @@ runs:
       id: deployment
       uses: actions/deploy-pages@v4
 
+  # unable to deploy via action.yml
+  #   it rails: Unexpected value 'environment'
+  #
+  #   https://github.com/noraworld/github-actions-sandbox/actions/runs/14129549740/job/39586216326
+  #
   # deploy:
   #   needs: build
   #   runs-on: ubuntu-latest
