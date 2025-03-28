@@ -1,4 +1,7 @@
-name: Build and Deploy Jekyll with GitHub Actions
+# tmp
+# with.repository
+
+name: Build Jekyll with customizable environments
 
 inputs:
   use_ruby_version:
@@ -11,7 +14,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout
+    - name: Check out repository
       uses: actions/checkout@v4
 
     - if: ${{ !(inputs.use_ruby_version == 'true' && inputs.use_gemfile == 'true') }}
@@ -24,14 +27,14 @@ runs:
       shell: sh
 
     - if: ${{ !(inputs.use_ruby_version == 'true' && inputs.use_gemfile == 'true') }}
-      name: Check out workflow repo
+      name: Check out Action repository
       uses: actions/checkout@v4
       with:
         repository: noraworld/github-actions-sandbox
         ref: main
         path: tmp
 
-    - name: Set env
+    - name: Set environments
       run: |
         if [ "${{ inputs.use_ruby_version }}" = "true" ]; then
           echo "RUBY_VERSION=$(cat .ruby-version)" >> $GITHUB_ENV
@@ -46,7 +49,7 @@ runs:
         fi
       shell: sh
 
-    - name: Setup Pages
+    - name: Set up Pages
       uses: actions/configure-pages@v5
 
     - name: Set up Ruby
@@ -56,7 +59,7 @@ runs:
         bundler-cache: true
         rubygems: latest
 
-    - name: Build Jekyll site
+    - name: Build with Jekyll
       run: bundle exec jekyll build
       shell: sh
 

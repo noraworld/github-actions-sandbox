@@ -1,3 +1,5 @@
+# uses
+
 name: Build and Deploy Jekyll with GitHub Actions
 
 on:
@@ -25,7 +27,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: action
+      - name: Build with Jekyll
         uses: noraworld/github-actions-sandbox@main
         with:
           use_ruby_version: ${{ inputs.use_ruby_version }}
