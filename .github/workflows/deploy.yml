@@ -16,8 +16,5 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: action
-        uses: noraworld/github-actions-sandbox/.github/workflows/jekyll-gh-pages.yml@main
+  build_and_deploy:
+    uses: noraworld/github-actions-sandbox/.github/workflows/jekyll-gh-pages.yml@main
