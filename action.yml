@@ -38,19 +38,20 @@ jobs:
 
       - name: Set env
         run: |
-          # if [ "${{ inputs.use_ruby_version }}" = "true" ]; then
-          #   echo "RUBY_VERSION=$(cat .ruby-version)" >> $GITHUB_ENV
-          # else
-          #   echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
-          # fi
           echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
-
-          # if [ "${{ inputs.use_gemfile }}" = "true" ]; then
-          #   echo "BUNDLE_GEMFILE=$(realpath Gemfile)" >> $GITHUB_ENV
-          # else
-          #   echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
-          # fi
           echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
+
+        # if [ "${{ inputs.use_ruby_version }}" = "true" ]; then
+        #   echo "RUBY_VERSION=$(cat .ruby-version)" >> $GITHUB_ENV
+        # else
+        #   echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
+        # fi
+
+        # if [ "${{ inputs.use_gemfile }}" = "true" ]; then
+        #   echo "BUNDLE_GEMFILE=$(realpath Gemfile)" >> $GITHUB_ENV
+        # else
+        #   echo "BUNDLE_GEMFILE=$(realpath tmp/Gemfile)" >> $GITHUB_ENV
+        # fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
