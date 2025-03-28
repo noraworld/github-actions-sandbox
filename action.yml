@@ -63,9 +63,9 @@ runs:
         fi
       shell: sh
 
-    - name: debug
-      run: echo "${{ env.RUBY_VERSION }}"
-      shell: sh
+    # - name: debug
+    #   run: echo "${{ env.RUBY_VERSION }}"
+    #   shell: sh
 
       # run: |
       #   echo "RUBY_VERSION=$(cat tmp/.ruby-version)" >> $GITHUB_ENV
