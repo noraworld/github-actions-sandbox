@@ -40,6 +40,14 @@ runs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Check if tmp directory is excluded in _config.yml
+      run: |
+        if ! sed -n '/^exclude:/,/^[^[:space:]]/p' _config.yml | grep -qE '^\s*-\s*tmp'; then
+          echo "Error: tmp is not excluded in _config.yml" >&2
+          exit
+        fi
+      shell: sh
+
     - if: ${{ !(inputs.use_ruby_version == 'true' && inputs.use_gemfile == 'true') }}
       name: Check out workflow repo
       uses: actions/checkout@v4
