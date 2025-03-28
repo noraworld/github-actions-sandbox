@@ -6,7 +6,7 @@ inputs:
   use_ruby_version:
     required: false
     default: false
-    # type: string
+    type: string
   use_gemfile:
     required: false
     default: false
