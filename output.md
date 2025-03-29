@@ -1,5 +1,6 @@
 ---
 layout: post
+title: aaaaaaaaaaaaaaa
 ---
 
 [Pipe | Test](https://example.com)
