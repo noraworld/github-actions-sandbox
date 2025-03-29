@@ -1,6 +1,5 @@
 ---
-layout: home
-title: Test
+layout: post
 ---
 
 [Pipe | Test](https://example.com)
