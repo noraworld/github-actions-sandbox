@@ -3,7 +3,7 @@ name: 4
 on:
   issues:
     types:
-      - closed
+      - labeled
 
 jobs:
   build:
@@ -11,16 +11,9 @@ jobs:
     steps:
       - name: variable test
         run: |
-          echo "github.event.issue.labels: ${{ github.event.issue.labels }}"
-          echo "github.event.issue.labels.*.name: ${{ github.event.issue.labels.*.name }}"
-          echo "toJson(github.event.issue.labels.*.name): ${{ toJson(github.event.issue.labels.*.name) }}"
-          echo "join(toJson(github.event.issue.labels.*.name)): ${{ join(toJson(github.event.issue.labels.*.name)) }}"
-          echo "join(github.event.issue.labels.*.name): ${{ join(github.event.issue.labels.*.name) }}"
-          echo "contains(join(github.event.issue.labels.*.name), 'foo'): ${{ contains(join(github.event.issue.labels.*.name), 'foo') }}"
-          echo "contains(join(toJson(github.event.issue.labels.*.name)), 'foo'): ${{ contains(join(toJson(github.event.issue.labels.*.name)), 'foo') }}"
-          echo "contains(github.event.issue.labels, 'foo'): ${{ contains(github.event.issue.labels, 'foo') }}"
-          echo "contains(github.event.issue.labels.*.name, 'foo'): ${{ contains(github.event.issue.labels.*.name, 'foo') }}"
-          echo "contains(toJson(github.event.issue.labels.*.name), 'foo'): ${{ contains(toJson(github.event.issue.labels.*.name), 'foo') }}"
+          echo "github.event.issue.state: ${{ github.event.issue.state }}"
+          echo "github.event.label.name: ${{ github.event.label.name }}"
+          echo "contains(github.event.issue.labels.*.name, 'foo'): contains(github.event.issue.labels.*.name, 'foo')"
 
       # - name: Store ✅ if the label "foo" exists, otherwise store ❌
       #   run: |
