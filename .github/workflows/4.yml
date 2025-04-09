@@ -16,11 +16,11 @@ jobs:
           echo "toJson(github.event.issue.labels.*.name): ${{ toJson(github.event.issue.labels.*.name) }}"
           echo "join(toJson(github.event.issue.labels.*.name)): ${{ join(toJson(github.event.issue.labels.*.name)) }}"
           echo "join(github.event.issue.labels.*.name): ${{ join(github.event.issue.labels.*.name) }}"
-          echo "startsWith(join(github.event.issue.labels.*.name), 'foo'): ${{ startsWith(join(github.event.issue.labels.*.name), 'foo') }}"
-          echo "startsWith(join(toJson(github.event.issue.labels.*.name)), 'foo'): ${{ startsWith(join(toJson(github.event.issue.labels.*.name)), 'foo') }}"
-          echo "startsWith(github.event.issue.labels, 'foo'): ${{ startsWith(github.event.issue.labels, 'foo') }}"
-          echo "startsWith(github.event.issue.labels.*.name, 'foo'): ${{ startsWith(github.event.issue.labels.*.name, 'foo') }}"
-          echo "startsWith(toJson(github.event.issue.labels.*.name), 'foo'): ${{ startsWith(toJson(github.event.issue.labels.*.name), 'foo') }}"
+          echo "contains(join(github.event.issue.labels.*.name), 'foo'): ${{ contains(join(github.event.issue.labels.*.name), 'foo') }}"
+          echo "contains(join(toJson(github.event.issue.labels.*.name)), 'foo'): ${{ contains(join(toJson(github.event.issue.labels.*.name)), 'foo') }}"
+          echo "contains(github.event.issue.labels, 'foo'): ${{ contains(github.event.issue.labels, 'foo') }}"
+          echo "contains(github.event.issue.labels.*.name, 'foo'): ${{ contains(github.event.issue.labels.*.name, 'foo') }}"
+          echo "contains(toJson(github.event.issue.labels.*.name), 'foo'): ${{ contains(toJson(github.event.issue.labels.*.name), 'foo') }}"
 
       # - name: Store ✅ if the label "foo" exists, otherwise store ❌
       #   run: |
