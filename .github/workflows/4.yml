@@ -13,7 +13,7 @@ jobs:
         run: |
           echo "github.event.issue.state: ${{ github.event.issue.state }}"
           echo "github.event.label.name: ${{ github.event.label.name }}"
-          echo "contains(github.event.issue.labels.*.name, 'foo'): contains(github.event.issue.labels.*.name, 'foo')"
+          echo "contains(github.event.issue.labels.*.name, 'foo'): ${{ contains(github.event.issue.labels.*.name, 'foo') }}"
 
       # - name: Store ✅ if the label "foo" exists, otherwise store ❌
       #   run: |
