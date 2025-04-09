@@ -17,7 +17,7 @@ jobs:
           echo "join(toJson(github.event.issue.labels.*.name)): ${{ join(toJson(github.event.issue.labels.*.name)) }}"
           echo "join(github.event.issue.labels.*.name): ${{ join(github.event.issue.labels.*.name) }}"
           echo "contains(join(github.event.issue.labels.*.name), 'bug'): ${{ contains(join(github.event.issue.labels.*.name), 'bug') }}"
-          echo "contains(join(toJson(github.event.issue.labels.*.name))): ${{ contains(join(toJson(github.event.issue.labels.*.name))) }}"
+          echo "contains(join(toJson(github.event.issue.labels.*.name))): ${{ contains(join(toJson(github.event.issue.labels.*.name)), 'bug') }}"
 
       # - name: Store ✅ if the label "foo" exists, otherwise store ❌
       #   run: |
