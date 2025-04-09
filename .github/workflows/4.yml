@@ -9,18 +9,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Store ✅ if the label "foo" exists, otherwise store ❌
+      - name: variable test
         run: |
-          if [ "$(echo "${{ toJson(github.event.issue.labels.*.name) }}" | grep -c "foo")" -gt 0 ]; then
-            echo "MARK=✅" >> $GITHUB_ENV
-          else
-            echo "MARK=❌" >> $GITHUB_ENV
-          fi
+          echo "github.event.issue.labels: ${{ github.event.issue.labels }}"
+          echo "github.event.issue.labels.*.name: ${{ github.event.issue.labels.*.name }}"
+          echo "toJson(github.event.issue.labels.*.name): ${{ toJson(github.event.issue.labels.*.name) }}"
+          echo "join(toJson(github.event.issue.labels.*.name)): ${{ join(toJson(github.event.issue.labels.*.name)) }}"
+          echo "join(github.event.issue.labels.*.name): ${{ join(github.event.issue.labels.*.name) }}"
+          echo "contains(join(github.event.issue.labels.*.name), 'bug'): ${{ contains(join(github.event.issue.labels.*.name), 'bug') }}"
 
-      - name: Output the mark
-        run: echo "${{ env.MARK }}"
+      # - name: Store ✅ if the label "foo" exists, otherwise store ❌
+      #   run: |
+      #     if [ "$(echo "${{ toJson(github.event.issue.labels.*.name) }}" | grep -c "foo")" -gt 0 ]; then
+      #       echo "MARK=✅" >> $GITHUB_ENV
+      #     else
+      #       echo "MARK=❌" >> $GITHUB_ENV
+      #     fi
 
-      - name: tac
-        run: gh issue list --repo noraworld/to-do --label tomorrow --json title,url --template '{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}{{"\r\n"}}' | tac
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      # - name: Output the mark
+      #   run: echo "${{ env.MARK }}"
+
+      # - name: tac
+      #   run: gh issue list --repo noraworld/to-do --label tomorrow --json title,url --template '{{range.}}* [ ] [{{.title}}]({{.url}}){{"\r\n"}}{{end}}{{"\r\n"}}' | tac
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
