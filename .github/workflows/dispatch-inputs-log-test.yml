@@ -21,8 +21,7 @@ jobs:
           node-version: '21.6.2'
 
       - name: Investigate
-        run: node dispatch-inputs-log-test.js ${{ inputs.foo || github.event.inputs.foo }}
+        run: node dispatch-inputs-log-test.js
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          ENV_VAR: ${{ inputs.foo || github.event.inputs.foo }}
