@@ -1,0 +1,22 @@
+name: inputs をマスクしたまま dispatch-inputs-log-test.yml を呼び出したい！
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21.6.2'
+
+      - name: Investigate
+        run: node dispatch-inputs-log-test.js
+        shell: sh
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
