@@ -10,4 +10,4 @@ on:
 
 jobs:
   dispatch-inputs-call:
-    - uses: noraworld/github-actions-sandbox/.github/workflows/dispatch-inputs-call.yml@main
+    uses: noraworld/github-actions-sandbox/.github/workflows/dispatch-inputs-call.yml@main
