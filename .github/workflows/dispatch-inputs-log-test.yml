@@ -1,0 +1,28 @@
+name: ディスパッチの入力値がログに表示されるを防ぎたい！
+
+on:
+  workflow_dispatch:
+    inputs:
+      foo:
+        required: true
+        description: '入力値'
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21.6.2'
+
+      - name: Investigate
+        run: node dispatch-inputs-log-test.js ${{ inputs.foo || github.event.inputs.foo }}
+        shell: sh
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          ENV_VAR: ${{ inputs.foo || github.event.inputs.foo }}
