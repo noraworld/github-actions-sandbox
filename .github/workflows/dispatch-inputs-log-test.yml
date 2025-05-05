@@ -4,8 +4,56 @@ on:
   workflow_dispatch:
     inputs:
       foo:
-        required: true
-        description: '入力値'
+        required: false
+        description: 'foo'
+        type: string
+      bar:
+        required: false
+        description: 'bar'
+        type: string
+      baz:
+        required: false
+        description: 'baz'
+        type: string
+      qux:
+        required: false
+        description: 'qux'
+        type: string
+      quux:
+        required: false
+        description: 'quux'
+        type: string
+      corge:
+        required: false
+        description: 'corge'
+        type: string
+      grault:
+        required: false
+        description: 'grault'
+        type: string
+      garply:
+        required: false
+        description: 'garply'
+        type: string
+      waldo:
+        required: false
+        description: 'waldo'
+        type: string
+      fred:
+        required: false
+        description: 'fred'
+        type: string
+      plugh:
+        required: false
+        description: 'plugh'
+        type: string
+      xyzzy:
+        required: false
+        description: 'xyzzy'
+        type: string
+      thud:
+        required: false
+        description: 'thud'
         type: string
 
 jobs:
