@@ -5,15 +5,15 @@ on:
     inputs:
       foo:
         required: false
-        description: 'foo'
+        description: https://github.com
         type: string
       bar:
         required: false
-        description: 'bar'
+        description: 'https://github.com'
         type: string
       baz:
         required: false
-        description: 'baz'
+        description: '[GitHub](https://github.com)'
         type: string
       qux:
         required: false
@@ -42,18 +42,6 @@ on:
       fred:
         required: false
         description: 'fred'
-        type: string
-      plugh:
-        required: false
-        description: 'plugh'
-        type: string
-      xyzzy:
-        required: false
-        description: 'xyzzy'
-        type: string
-      thud:
-        required: false
-        description: 'thud'
         type: string
 
 jobs:
