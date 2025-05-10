@@ -45,3 +45,4 @@ jobs:
             # echo "diary_issue_body: $(echo "$diary_issue_body" | sed -E "s/$display_name/\[$display_name\]\($escaped_url\)/g")"
             echo "============================================================================================================"
           done
+        shell: sh
