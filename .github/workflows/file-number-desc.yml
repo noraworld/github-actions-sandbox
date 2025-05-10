@@ -37,11 +37,11 @@ jobs:
                     sed -e "s/[\"\']//g")
 
             echo "title:            $title"
-            echo "body:             $body"
+            # echo "body:             $body"
             echo "assignee:         $assignee"
             echo "label:            $label"
             echo "display_name:     $(echo "$title" | cut -d '_' -f4)"
-            echo "escaped_url:      $(echo "$url" | sed 's/[\^\$\.\/]/\\&/g')"
-            echo "diary_issue_body: $(echo "$diary_issue_body" | sed -E "s/$display_name/\[$display_name\]\($escaped_url\)/g")"
+            # echo "escaped_url:      $(echo "$url" | sed 's/[\^\$\.\/]/\\&/g')"
+            # echo "diary_issue_body: $(echo "$diary_issue_body" | sed -E "s/$display_name/\[$display_name\]\($escaped_url\)/g")"
             echo "============================================================================================================"
           done
