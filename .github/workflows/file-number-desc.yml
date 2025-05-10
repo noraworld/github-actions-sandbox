@@ -1,0 +1,47 @@
+name: ファイルの中の番号を降順に処理
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          repository: noraworld/diary-templates-assistant
+          ref: main
+          path: tmp
+
+      - name: test
+        run: |
+          find tmp/.github/ISSUE_TEMPLATE -type f | while read -r issue_template; do
+            raw_number=$(grep -m1 '^name:' "$issue_template" | sed -E 's/^name:[[:space:]]*([0-9]+)\..*/\1/')
+            number=$((10#$raw_number))
+            printf "%03d %s\n" "$number" "$issue_template"
+          done | sort -nr | while read -r number issue_template; do
+            title=$(grep "title: " "$issue_template"                              |
+                    sed -e 's/^title: //g'                                        |
+                    sed -e "s/[\"\']//g"                                          |
+                    sed -e "s/\[{{DATE}}\]/$(date '+%Y-%m-%d' --date '0 day')/g")
+
+            body=$(sed -e '/^---$/,/^---$/d' "$issue_template")
+
+            assignee=$(grep "assignees: " "$issue_template" |
+                       sed -e 's/^assignees: //g'           |
+                       sed -e "s/[\"\']//g")
+
+            label=$(grep "labels: " "$issue_template" |
+                    sed -e 's/^labels: //g'           |
+                    sed -e "s/[\"\']//g")
+
+            echo "title:            $title"
+            echo "body:             $body"
+            echo "assignee:         $assignee"
+            echo "label:            $label"
+            echo "display_name:     $(echo "$title" | cut -d '_' -f4)"
+            echo "escaped_url:      $(echo "$url" | sed 's/[\^\$\.\/]/\\&/g')"
+            echo "diary_issue_body: $(echo "$diary_issue_body" | sed -E "s/$display_name/\[$display_name\]\($escaped_url\)/g")"
+            echo "============================================================================================================"
+          done
