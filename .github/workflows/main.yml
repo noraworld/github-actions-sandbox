@@ -5,7 +5,7 @@ on:
 
 jobs:
   call-child:
-    uses: noraworld/diary-templates-assistant/.github/workflows/child.yml@main
+    uses: noraworld/github-actions-sandbox/.github/workflows/child.yml@main
     # with: {}  # inputs があるならここに指定
     # secrets: inherit  # 必要なら
 
