@@ -1,0 +1,17 @@
+name: main
+
+on:
+  workflow_dispatch:
+
+jobs:
+  call-child:
+    uses: noraworld/diary-templates-assistant/.github/workflows/child.yml@main
+    # with: {}  # inputs があるならここに指定
+    # secrets: inherit  # 必要なら
+
+  bar:
+    needs: call-child
+    if: needs.call-child.outputs.should_run_bar == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running bar!"

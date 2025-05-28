@@ -1,0 +1,20 @@
+# .github/workflows/child.yml
+name: Child Workflow
+
+on:
+  workflow_call:
+    outputs:
+      should_run_bar:
+        description: "Whether to run bar job"
+        value: ${{ jobs.foo.outputs.should_run_bar }}
+
+jobs:
+  foo:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run_bar: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Run Python and capture output
+        id: check
+        run: |
+          python app.py >> $GITHUB_OUTPUT
