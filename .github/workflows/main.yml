@@ -14,7 +14,4 @@ jobs:
     if: needs.call-child.outputs.should_run_bar == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
       - run: echo "Running bar!"
