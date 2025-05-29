@@ -15,3 +15,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Running bar!"
+
+  baz:
+    needs: bar
+    if: needs.call-child.outputs.should_run_bar == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running baz!"
+
+  qux:
+    needs: baz
+    if: needs.call-child.outputs.should_run_bar == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running qux!"
+
+  quux:
+    needs: qux
+    if: needs.call-child.outputs.should_run_bar == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running quux!"
