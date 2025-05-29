@@ -14,5 +14,6 @@ jobs:
   check-if-skipped:
     needs: daily-report-day-off
     if: needs.daily-report-day-off.outputs.day_off == 'false'
-    run: |
-      echo "it works!"
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "it works!"
