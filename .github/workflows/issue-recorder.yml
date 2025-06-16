@@ -31,7 +31,7 @@ jobs:
         run: echo "TITLE=$(cut -d '_' -f3 <<< "${{ github.event.issue.title }}")" >> $GITHUB_ENV
 
       - name: This is a test for Issue Recorder
-        uses: noraworld/github-actions-sandbox@main
+        uses: noraworld/issue-recorder@main
         with:
           mode: "file"
           # filepath: _posts/${{ env.YEAR }}/${{ env.MONTH }}/${{ github.event.issue.title }}-.md
