@@ -27,7 +27,9 @@ jobs:
                 echo "{\"input\": \"$f\", \"output\": \"$out\"}"
               done | jq -s .)
 
-          echo "file_pairs_json=$pairs" >> "$GITHUB_OUTPUT"
+          echo "file_pairs_json<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$pairs" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
         shell: bash
 
   translate:
