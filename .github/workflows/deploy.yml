@@ -81,15 +81,15 @@ jobs:
         uses: noraworld/chatgpt-feedback@main
         with:
           model: gpt-4o
-          system_prompt: |
+          system_prompt: >
             これは日本語で書かれたブログ記事です。この記事の英語バージョンを作成したいので自然な英語に訳してください。
-            先頭の --- で囲まれた YAML に関しては title と description のみを英訳し、それ以外はそのまま出力してください。
-            本文の中にある、コードブロックで囲まれた部分、画像、URL はそのまま出力してください。
-            本文の最初（YAML の直後）に以下の文言を入れてください。
+            次のルールに従って回答してください。
+            1. 先頭の --- で囲まれた YAML に関しては title と description のみを英訳し、それ以外は改行も維持してそのまま出力してください。
+            2. 本文の中に、コードブロックで囲まれた部分、画像、URL が含まれる場合、それらはそのまま出力してください。
+            3. 本文の最初（YAML の直後）に次の文言を入れてください。
             This article was automatically translated from Japanese to English by ChatGPT.
             Please note that some nuances or information may not be accurately reflected.
-            上記は一文ごとに改行されていますが、実際に結果を出力する際は文と文の間にスペースを入れて一行にまとめて表示してください。
-            なお、レスポンスをそのままファイルに保存するため、「わかりました」などの返答は一切しないでください。
+            4. レスポンスをそのままファイルに保存するため、「わかりました」などの返答は一切しないでください。
           user_prompt: ${{ env.USER_PROMPT }}
           output_file: ${{ matrix.pair.output }}
         env:
