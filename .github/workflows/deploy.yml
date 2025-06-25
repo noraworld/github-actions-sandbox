@@ -1,39 +1,61 @@
-name: Deploy
+name: Translate
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
+    paths:
+      - '_posts/ja/**'
 
 jobs:
-  build:
+  collect:
+    name: Collect changed files
     runs-on: ubuntu-latest
+    outputs:
+      file_pairs_json: ${{ steps.set-pairs.outputs.file_pairs_json }}
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - id: set-pairs
+        run: |
+          pairs=$(git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} \
+            | grep '^_posts/ja/.*\.md$' \
+            | while read f; do
+                out=$(echo "$f" | sed 's|^_posts/ja/|_posts/en/|')
+                echo "{\"input\": \"$f\", \"output\": \"$out\"}"
+              done | jq -s .)
+
+          echo "file_pairs_json=$pairs" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+  translate:
+    name: Translate each post
+    needs: collect
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        pair: ${{ fromJson(needs.collect.outputs.file_pairs_json) }}
+
+    steps:
+      - name: Translate with ChatGPT
+        uses: noraworld/chatgpt-feedback@main
         with:
-          path: ./
+          model: gpt-4o
+          system_prompt: |
+            これは日本語で書かれたブログ記事です。この記事の英語バージョンを作成したいので自然な英語に訳してください。
+            先頭の --- で囲まれた YAML に関しては title と description のみを英訳し、それ以外はそのまま出力してください。
+            なお、レスポンスをそのままファイルに保存するため、「わかりました」などの返答は一切しないでください。
+          user_prompt: ${{ matrix.pair.input }}
+          output_file: ${{ matrix.pair.output }}
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          CHATGPT_API_KEY: ${{ secrets.CHATGPT_API_KEY }}
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Commit
+        run: |
+          git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
+          git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
+          git add "${{ matrix.pair.output }}"
+          git commit -m "Translate post: ${{ matrix.pair.input }} → ${{ matrix.pair.output }}"
+          git push -u origin main
