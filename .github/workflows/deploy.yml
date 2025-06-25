@@ -42,6 +42,8 @@ jobs:
         pair: ${{ fromJson(needs.collect.outputs.file_pairs_json) }}
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Read content from input file
         run: |
           content=$(cat "${{ matrix.pair.input }}")
