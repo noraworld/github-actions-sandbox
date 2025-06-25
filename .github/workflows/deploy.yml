@@ -1,3 +1,4 @@
+# https://chatgpt.com/c/685bdb50-189c-8004-be62-7c9bca13dd60
 name: Translate
 
 on:
@@ -8,9 +9,9 @@ on:
       - '_posts/ja/**'
   workflow_dispatch:
     inputs:
-      files:
-        description: 'Files to translate (one per line)'
+      target_path:
         required: true
+        description: Target full path (comma separated)
         type: string
 
 jobs:
@@ -18,16 +19,26 @@ jobs:
     name: Collect changed files
     runs-on: ubuntu-latest
     outputs:
+      # [
+      #   {
+      #     "input": "_posts/ja/2025/06/2025-06-25-hello.md",
+      #     "output": "_posts/en/2025/06/2025-06-25-hello.md"
+      #   },
+      #   {
+      #     "input": "_posts/ja/2025/06/2025-06-26-world.md",
+      #     "output": "_posts/en/2025/06/2025-06-26-world.md"
+      #   }
+      # ]
       file_pairs_json: ${{ steps.set-pairs.outputs.file_pairs_json }}
     steps:
       - uses: actions/checkout@v4
         with:
-            fetch-depth: 0
+          fetch-depth: 0
 
       - id: set-pairs
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            pairs=$(echo "${{ github.event.inputs.files }}" | tr ',' '\n' | xargs -n1 |
+            pairs=$(echo "${{ github.event.inputs.target_path }}" | tr ',' '\n' | xargs -n1 |
               grep '^_posts/ja/.*\.md$' |
               while read f; do
                 out=$(echo "$f" | sed 's|^_posts/ja/|_posts/en/|')
@@ -55,7 +66,6 @@ jobs:
       max-parallel: 1
       matrix:
         pair: ${{ fromJson(needs.collect.outputs.file_pairs_json) }}
-
     steps:
       - uses: actions/checkout@v4
 
@@ -87,5 +97,5 @@ jobs:
           git config user.name "$(git --no-pager log --format=format:'%an' -n 1)"
           git config user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
           git add "${{ matrix.pair.output }}"
-          git commit -m "Translate post: ${{ matrix.pair.input }} → ${{ matrix.pair.output }}"
+          git commit -m "Translate ${{ matrix.pair.input }} into English"
           git push -u origin main
