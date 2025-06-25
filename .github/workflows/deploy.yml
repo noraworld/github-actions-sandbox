@@ -42,6 +42,14 @@ jobs:
         pair: ${{ fromJson(needs.collect.outputs.file_pairs_json) }}
 
     steps:
+      - name: Read content from input file
+        run: |
+          content=$(cat "${{ matrix.pair.input }}")
+          echo "USER_PROMPT<<EOF" >> "$GITHUB_ENV"
+          echo "$content" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+        shell: bash
+
       - name: Translate with ChatGPT
         uses: noraworld/chatgpt-feedback@main
         with:
@@ -50,7 +58,7 @@ jobs:
             これは日本語で書かれたブログ記事です。この記事の英語バージョンを作成したいので自然な英語に訳してください。
             先頭の --- で囲まれた YAML に関しては title と description のみを英訳し、それ以外はそのまま出力してください。
             なお、レスポンスをそのままファイルに保存するため、「わかりました」などの返答は一切しないでください。
-          user_prompt: ${{ matrix.pair.input }}
+          user_prompt: ${{ env.USER_PROMPT }}
           output_file: ${{ matrix.pair.output }}
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
