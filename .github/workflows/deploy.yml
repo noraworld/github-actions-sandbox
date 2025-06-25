@@ -6,6 +6,12 @@ on:
       - main
     paths:
       - '_posts/ja/**'
+  workflow_dispatch:
+    inputs:
+      files:
+        description: 'Files to translate (one per line)'
+        required: true
+        type: string
 
 jobs:
   collect:
@@ -20,12 +26,21 @@ jobs:
 
       - id: set-pairs
         run: |
-          pairs=$(git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} \
-            | grep '^_posts/ja/.*\.md$' \
-            | while read f; do
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            pairs=$(echo "${{ github.event.inputs.files }}" | tr ',' '\n' | xargs -n1 |
+              grep '^_posts/ja/.*\.md$' |
+              while read f; do
                 out=$(echo "$f" | sed 's|^_posts/ja/|_posts/en/|')
                 echo "{\"input\": \"$f\", \"output\": \"$out\"}"
               done | jq -s .)
+          else
+            pairs=$(git diff --name-only --diff-filter=AM ${{ github.event.before }} ${{ github.sha }} |
+              grep '^_posts/ja/.*\.md$' |
+              while read f; do
+                out=$(echo "$f" | sed 's|^_posts/ja/|_posts/en/|')
+                echo "{\"input\": \"$f\", \"output\": \"$out\"}"
+              done | jq -s .)
+          fi
 
           echo "file_pairs_json<<EOF" >> "$GITHUB_OUTPUT"
           echo "$pairs" >> "$GITHUB_OUTPUT"
