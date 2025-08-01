@@ -1,9 +1,11 @@
 name: 4
 
+# on:
+#   issues:
+#     types:
+#       - labeled
 on:
-  issues:
-    types:
-      - labeled
+  workflow_dispatch:
 
 jobs:
   build:
