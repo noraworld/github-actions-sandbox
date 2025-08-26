@@ -7,4 +7,4 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "This workflow is in workflows/subdir. Does it work anyway?"
+      - run: echo "Turns out it didn't work! What the heck!!!"
