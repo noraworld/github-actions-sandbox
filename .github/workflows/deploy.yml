@@ -66,8 +66,6 @@ jobs:
       matrix:
         pair: ${{ fromJson(needs.collect.outputs.file_pairs_json) }}
     steps:
-      - uses: actions/checkout@4
-
       - name: Create a todo task as completed
         run: |
           # Get a blog title
@@ -107,6 +105,8 @@ jobs:
           # Close the issue
           gh issue edit "$new_issue_url" --add-label "pomodoro:0,done"
         shell: sh
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
   translate:
     name: Translate each post
