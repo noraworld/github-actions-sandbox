@@ -15,4 +15,4 @@ jobs:
           note_email: ${{ secrets.NOTE_EMAIL }}
           note_password: ${{ secrets.NOTE_PASSWORD }}
           title: 朝の coffee を少し変えてみた話
-          content_file: ./_posts/ja/2026/02/_posts/ja/2026/02/2026-02-25-sample.md
+          content_file: ./_posts/ja/2026/02/2026-02-25-sample.md
